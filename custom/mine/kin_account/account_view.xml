@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+
+        <record id="view_account_journal_form_extend" model="ir.ui.view">
+            <field name="name">account.journal.form.extend</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form" />
+            <field name="arch" type="xml">
+                <field name="show_on_dashboard" groups="base.group_no_one" position="after" >
+                    <field name="analytic_account_id" />
+                </field>
+            </field>
+        </record>
+
+         <record id="view_move_line_tree_extend" model="ir.ui.view">
+            <field name="name">account.move.line.tree.extend</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="credit" position="after" >
+                    <field name="balance" sum="Total Balance" />
+                    <field name="invoice_id" string="See Invoice" />
+                    <field name="payment_id" />
+                </field>
+            </field>
+        </record>
+
+         <record id="view_move_line_form_extend" model="ir.ui.view">
+            <field name="name">account.move.line.form.extend</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_form"/>
+            <field name="arch" type="xml">
+                 <field name="quantity" position="after">
+                     <field name="balance" />
+                 </field>
+                <field name="move_id" position="before">
+                    <field name="invoice_id" string="See Invoice" />
+                    <field name="payment_id" />
+                </field>
+            </field>
+        </record>
+
+        <menuitem action="account.action_account_moves_all_a" icon="STOCK_JUSTIFY_FILL" id="account.menu_action_account_moves_all" parent="account.menu_finance_entries" sequence="1" groups="account.group_account_user" />
+
+        <menuitem name="Generate Assets Entries" action="account_asset.action_asset_depreciation_confirmation_wizard"
+        id="account_asset.menu_asset_depreciation_confirmation_wizard"
+        parent="account.menu_finance_entries" sequence="111" groups="account.group_account_user"/>
+
+    </data>
+</openerp>

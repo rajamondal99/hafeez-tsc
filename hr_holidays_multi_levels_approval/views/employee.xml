@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+	<data>
+		<record id="view_employee_form" model="ir.ui.view">
+			<field name="name">hr.employee.form.inherit</field>
+			<field name="model">hr.employee</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="hr.view_employee_form" />
+			<field name="arch" type="xml">
+				<notebook>
+					<page string="Holidays approvers chain" groups="base.group_user">
+						<button string="Set default chain" name="set_default_validation_chain" type="object" class="oe_highlight" help="Generate approvers chain based on management hierarchy"/>
+						<field name="holidays_approvers" context="{'dafault_employee': id}">
+							<tree  editable="bottom">
+								<field name="sequence" widget="handle"/>
+								<field name="approver"/>
+							</tree>
+						</field>
+						<group>
+							<field name="transfer_holidays_approvals_to"/>
+						</group>
+					</page>
+				</notebook>
+			</field>
+		</record>
+		 <record id="action_open_employee_by_user" model="ir.actions.server">
+            <field name="name">Employee</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="condition">True</field>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">action = self.get_new_employee_action(cr, uid, context=context)</field>
+        </record>
+        
+        <menuitem id="hr_holidays_menu_open_employee_extend"
+			name="Employees" parent="hr.menu_hr_root" 
+			action="action_open_employee_by_user" sequence="1"/> 
+		
+		
+        
+	
+
+
+	</data>
+</openerp>

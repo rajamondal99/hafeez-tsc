@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+         <!-- QWeb Reports -->
+        <report 
+            id="customer_subscription_report_id"
+            model="customer.subscription"
+            menu="True"
+            report_type="qweb-pdf"
+            string="Print Subscriber Form"
+            name="ng_subscription.subscription_print_report_id"
+            file="ng_subscription.subscription_print_report_id"
+           />
+        
+        <template id="subscription_print_report_id">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="report.external_layout">
+                         <div class="page">
+                            <h3 class="text-center">
+                                Subscriber Form
+                            </h3>
+                            <p>
+                                <strong><span t-field="doc.code"/> </strong><br/>
+                                <strong>Name:- </strong><span t-field="doc.title"/> - <span t-field="doc.contact_name"/> - <span t-field="doc.state"/>
+                            </p>
+                            <p><strong>Address:-</strong>
+                                <span t-field="doc.street"/> <span t-field="doc.street2"/> 
+                                <span t-field="doc.city"/>
+                                <span t-field="doc.zip"/><br/>
+                                <span t-field="doc.state_id.name"/>
+                                <span t-field="doc.country_id.name"/><br/>
+                            </p>
+                            <table class="table table-responsive" style="border: 2px solid black;">
+                               <tr>
+                                   <td><strong>Sex:</strong> </td><td> <span t-field="doc.sex"/></td>
+                                   <td><strong>Marital Status: </strong></td><td><span t-field="doc.marital_status"/></td>
+                               </tr>
+                                <tr>
+                                   <td><strong>Date of Birth: </strong></td><td><span t-field="doc.birth_date"/></td>
+                                   <td><strong>Nationality: </strong></td><td><span t-field="doc.nationality_id.name"/></td>
+                                </tr>
+                                <tr>
+                                   <td><strong>Telephone:</strong> </td><td><span t-field="doc.tel_no"/></td>
+                                   <td><strong>Email: </strong></td><td><span t-field="doc.email"/></td>
+                                </tr>
+                                <tr>
+                                   <td><strong>Occupation: </strong></td><td><span t-field="doc.occupation" /></td>
+                                   <td><strong>Employeer: </strong></td><td><span t-field="doc.employeer" /></td>
+                                </tr>
+                                <tr>
+                                   <td><strong>Employeer Address: </strong></td><td><span t-field="doc.employeer_address"/></td>
+                                   <td></td><td></td>
+                                </tr>
+                            </table>
+                            <p><strong>Next Of Kin:-</strong></p>
+                            <table class="table table-responsive" style="border: 2px solid black;">
+                               <tr>
+                                   <td><strong>Next of Kin:</strong></td><td><span t-field="doc.next_kin"/></td>
+                                   <td><strong>Address:</strong></td><td><span t-field="doc.next_kin_address"/></td>
+                               </tr>
+                                <tr>
+                                   <td><strong>Relationship:</strong></td><td><span t-field="doc.next_kin_relationship"/></td>
+                                   <td><strong>Telephone:</strong></td><td><span t-field="doc.next_kin_tel_no"/></td>
+                                </tr>
+                            </table>
+                            <p><strong>Plot Information:-</strong></p>
+                            <table class="table table-responsive" style="border: 2px solid black;">
+                               <tr>
+                                   <td><strong>Estate:</strong></td><td><span t-field="doc.product_template_id.name"/></td>
+                                   <td><strong>Estate Variant:</strong></td><td><span t-field="doc.estate_id.name"/></td>
+                               </tr>
+                                <tr>
+                                   <td><strong>No Of Plot:</strong></td><td><span t-field="doc.plot_no"/></td>
+                                   <td><strong>Plot Size:</strong></td><td><span t-field="doc.estate_id.name"/></td>
+                                </tr>
+                            </table>
+                            <p><strong>Building Information:-</strong></p>
+                            <table class="table table-responsive" style="border: 2px solid black;">
+                               <tr>
+                                   <td><strong>Type of Building:</strong></td><td><span t-field="doc.bulding_type"/></td>
+                                   <td><strong>Purpose:</strong></td><td><span t-field="doc.purpose"/></td>
+                               </tr>
+                            </table><br/><br/>
+                            <p><strong>Marketer Information:-</strong></p>
+                            <table class="table table-responsive" style="border: 2px solid black;">
+                               <tr>
+                                   <td><strong>Name of Marketer:</strong></td><td><span t-field="doc.marketer_id.agent_id.name"/></td>
+                                   <td><strong>Marketers Region:</strong></td><td><span t-field="doc.marketer_region1"/></td>
+                               </tr>
+                               <tr>
+                                   <td><strong>Marketers Branch:</strong></td><td><span t-field="doc.marketer_branch1.name"/></td>
+                                   <td><strong>Marketers Phone:</strong></td><td><span t-field="doc.marketer_phone"/></td>
+                               </tr>
+                               <tr>
+                                   <td><strong>Payment Plan:</strong></td><td><span t-field="doc.payment_plan"/></td>
+                                   <td></td><td></td>
+                               </tr>
+                            </table>
+                        </div>
+                </t>
+               </t>
+        </template>
+    </data>
+</openerp>

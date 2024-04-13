@@ -1,0 +1,85 @@
+<openerp>
+  <data>
+    <!-- explicit list view definition -->
+<!--    
+    <record model="ir.ui.view" id="tsc_tsc.list">
+      <field name="name">tsc_tsc purchase.order</field>
+      <field name="res_model">purchase.order</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="date_order"/>
+          <field name="partner_id"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <record model="ir.actions.act_window" id="purchase_123456987order_tree_33">
+            <field name="name">Purchase Order</field>
+            <field name="res_model">purchase.order</field>
+            
+            <field name="view_mode">tree,form</field>
+            <field name="arch" type="xml">
+                <tree decoration-bf="message_unread==True" decoration-muted="state=='cancel'" decoration-info="state in ('wait','confirmed')" string="Purchase Order">
+                    <field name="message_unread" invisible="1"/>
+                    <field name="name" string="Reference"/>
+                    <field name="date_order" />
+                    <field name="partner_id"/>
+                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                    <field name="date_planned" invisible="context.get('quotation_only', False)"/>
+                    <field name="origin"/>
+                    <field name="amount_untaxed" sum="Total Untaxed amount" string="Untaxed" widget="monetary"/>
+                    <field name="amount_total" sum="Total amount" widget="monetary"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="state"/>
+                    <field name="invoice_status" invisible="not context.get('show_purchase', False)"/>
+                </tree>
+            </field>
+        </record>
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="tsc_tsc.action_window">
+      <field name="name">tsc_tsc window</field>
+      <field name="res_model">tsc_tsc.tsc_tsc</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="tsc_tsc.action_server">
+      <field name="name">tsc_tsc server</field>
+      <field name="model_id" ref="model_tsc_tsc_tsc_tsc"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="tsc_tsc" id="tsc_tsc.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="tsc_tsc.menu_1" parent="tsc_tsc.menu_root"/>
+    <menuitem name="Menu 2" id="tsc_tsc.menu_2" parent="tsc_tsc.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="tsc_tsc.menu_1_list" parent="tsc_tsc.menu_1"
+              action="tsc_tsc.action_window"/>
+    <menuitem name="Server to list" id="tsc_tsc" parent="tsc_tsc.menu_2"
+              action="tsc_tsc.action_server"/>
+    -->
+
+    <menuitem name="Purchase Order" id="purchase_order_tsc_tsc3" parent="account.menu_finance_payables"
+          action="purchase_123456987order_tree_33"/> 
+  </data>
+</openerp>

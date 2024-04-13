@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+        <record id="crm_case_form_view_oppor_inherit_subscriber" model="ir.ui.view">
+            <field name="name">crm.lead</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor" />
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page[@name='lead']" position="after">
+                    <page string="Subscriber Information">
+                        <group>
+                            <group>
+                                <field name="subscribe_id"/>
+                                <field name="surname" />
+                                <field name="firstname" />
+                                <field name="othername" />
+                                <field name="sex" />
+                                <field name="marital_status" />
+                                <field name="birth_date" />
+                            </group>
+                            <group>
+                                <field name="nationality_id" />
+<!--                                <field name="residential_address" /-->
+                                <field name="occupation" />
+                                <field name="employeer" />
+                                <field name="employeer_address" />
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="next_kin" />
+                                <field name="next_kin_relationship" />
+                            </group>
+                            <group>
+                                <field name="next_kin_address" />
+                                <field name="next_kin_tel_no" />
+                            </group>
+                        </group>
+                        <group string="Plot Information">
+                                <group>
+                                    <field name="product_template_id"/>
+                                    <field name="estate_id"/>
+                                    <field name="plot_no"/>
+                                    <field name="plot_size"/>
+                                 </group>
+                                 <group/>
+                        </group>
+                        <group string="Building Information"> 
+                                 <group>
+                                     <field name="bulding_type" />
+                                     <field name="purpose"/>
+                                 </group>
+                                 <group/>
+                        </group>
+                        <group string="Marketer Information"> 
+                            <group>
+                                 <field name="marketer_id" />
+                                 <field name="payment_plan"/>
+                             </group>
+                             <group>
+                                 <field name="marketer_region1"/>
+                                 <field name="marketer_branch1"/>
+                                 <field name="marketer_phone"/>
+                             </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</openerp>

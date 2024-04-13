@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+        <record model="ir.ui.view" id="sales_agent_form_view_id1">
+            <field name="name">sales.agent</field>
+            <field name="model">sales.agent</field>
+            <field name="arch" type="xml">
+                <form string="Sales Agent">
+                    <sheet>
+                      <group string="Sales Agent">
+                        <group>  
+                            <field name="name"/>
+                        </group>
+                        <group/>
+                         </group>
+                     </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="sales_agent_tree_view_id1">
+            <field name="name">sales.agent</field>
+            <field name="model">sales.agent</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Agent">
+                     <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="sales_agent_action_id">
+            <field name="name">Sales Agent</field>
+            <field name="res_model">sales.agent</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem id="sales_agent_menu_id" sequence="13" parent="base.menu_sale_config" name="Sales Agents" action="sales_agent_action_id"
+          groups="base.group_configuration"/>
+        
+        <record model="ir.ui.view" id="sales_agent_commission_tree_view_id">
+            <field name="name">sales.agent.commision</field>
+            <field name="model">sales.agent.commision</field>
+            <field name="arch" type="xml">
+                <tree string="Commission" editable="bottom">
+                     <field name="number_of_months"/>
+                     <field name="commission_percentage"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="sales_agent_partner_form_view_id">
+            <field name="name">sales.agent.partner</field>
+            <field name="model">sales.agent.partner</field>
+            <field name="arch" type="xml">
+                <form string="Sales Agent Partner">
+                    <sheet>
+                        <group string="Sales Agent Partner">
+                            <group>
+                                <field name="agent_id"/>
+                                <field name="partner_id" context="{'default_customer': 0, 'default_is_agent': 1}" domain="[('is_agent', '=' , True)]"/>
+                            </group>
+                            <group>
+                                <field name="user_id" />
+                                <field name="zone_id" />
+                                <field name="branch_id" />
+                                <field name="active"/>     
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="sales_agent_partner_tree_view_id">
+            <field name="name">sales.agent.partner</field>
+            <field name="model">sales.agent.partner</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Agent Partner">
+                     <field name="agent_id"/>
+                     <field name="partner_id"/>
+                     <field name="user_id"/>
+                     <field name="zone_id" />
+                     <field name="branch_id" />
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="sales_agent_partner_search_view">
+            <field name="name">sales.agent.partner</field>
+            <field name="model">sales.agent.partner</field>
+            <field name="arch" type="xml">
+                <search string="Sales Agent Partner">
+                     <field name="agent_id"/>
+                     <field name="partner_id"/>
+                     <field name="user_id"/>
+                </search>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="sales_agent_partner_action_id">
+            <field name="name">Sales Agent Partner</field>
+            <field name="res_model">sales.agent.partner</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem id="sales_agent_partner_menu_id" sequence="14" parent="base.menu_sale_config" name="Sales Agent Partners"
+         action="sales_agent_partner_action_id" groups="base.group_configuration"/>
+  
+        
+        <!-- Sale Property Reference-->
+        
+        <record model="ir.ui.view" id="sale_property_reference_form_view">
+            <field name="name">sale.property.reference</field>
+            <field name="model">sale.property.reference</field>
+            <field name="arch" type="xml">
+                <form string="Sale Property Reference">
+                    <sheet>
+                      <group string="Sale Property Reference">
+                        <group>  
+                            <field  name="name"/>
+                            <field  name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="sale_line_id" readonly="1"/>
+                        </group>
+                         </group>
+                         <group string="Customer Accounts">
+                             <group>
+                                 <field  name="product_id"/>
+                             </group>
+                             <group> 
+                                 <field name="order_id"/>
+                                 <field name="agent_id"/> 
+                                 <field name="zone_id"/> 
+                                 <field name="branch_id"/> 
+                             </group>
+                         </group>
+                     </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_sale_property_reference__search" model="ir.ui.view">
+            <field name="name">sale.property.reference.search</field>
+            <field name="model">sale.property.reference</field>
+            <field name="arch" type="xml">
+                <search string="Sale Property Reference">
+                    <field name="name" filter_domain="['|', ('name','ilike',self)]" string="Sale Property Reference"/>
+                    <field name="partner_id"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Associated Partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="sale_property_reference_tree_view">
+            <field name="name">sale.property.reference</field>
+            <field name="model">sale.property.reference</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Property Reference">
+                     <field  name="name"/>
+                     <field  name="partner_id"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="sale_property_reference_action_id">
+            <field name="name">Sale Property Reference</field>
+            <field name="res_model">sale.property.reference</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <record id="action_open_partner_property_ref" model="ir.actions.act_window">
+            <field name="context">{'search_default_partner_id': [active_id], 'default_partner_id': active_id}</field>
+            <field name="name">Customer Accounts</field>
+            <field name="res_model">sale.property.reference</field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_partner_form_isagent_inherit">
+            <field name="name">res.partner</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field  name="is_agent"/>
+                 </field>
+                <field name="website" position="after">
+                    <field  name="customer_uniq_id" attrs="{'invisible': [('is_agent', '=', True)]}"/>
+                    <field  name="agent_uniq_id" attrs="{'invisible': [('customer', '=', True)]}"/>
+                    <field name="zone_id" invisible="1"/> 
+                    <field name="branch_id" invisible="1" domain="[('zone_id', '=', zone_id)]"/>
+                 </field>
+                <div name="button_box" position="inside">
+                    <button class="oe_stat_button" type="action" name="%(ng_property_management.action_open_partner_property_ref)d"
+                        icon="fa-book">
+                        <field string="Customer Accounts" name="customer_accouts_count" widget="statinfo"/>
+                    </button>
+                </div>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_partner_form_isagent_inherittree">
+            <field name="name">res.partner.tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="display_name" position="after">
+                    <field  name="customer_uniq_id"/>
+                 </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_partner_form_isagent_inheritsearch">
+            <field name="name">res.partner.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field  name="customer_uniq_id"/> 
+                    <field name="zone_id"/> 
+                    <field name="branch_id"/>
+                 </field>
+                 <xpath expr="//filter[@name='customer']" position="after">
+                     <filter string="Marketers" name="markter" domain="[('is_agent','=',1)]"/>
+                 </xpath>
+            </field>
+        </record>
+        
+        <menuitem id="sale_property_reference_menu_id" sequence="14" parent="base.menu_sale_config" name="Sale Property Reference"
+         action="sale_property_reference_action_id" groups="base.group_configuration"/>
+        
+        <menuitem name="Property"
+            id="property_management_menu_id" groups="base.group_sale_salesman,base.group_sale_manager"
+            parent="base.menu_base_partner" sequence="41"
+            />
+        
+        <menuitem id="base.menu_product_inherited" name="All Plots" action="product.product_normal_action_sell" parent="property_management_menu_id" sequence="100"/>
+        <menuitem id="base.menu_product" name="Properties/Lands/Estates" action="product.product_template_action" parent="property_management_menu_id" sequence="1"/>
+    
+        <menuitem name="Property Sold"
+            id="property_sold_menu_id" groups="base.group_sale_salesman,base.group_sale_manager"
+            parent="base.menu_base_partner" sequence="42"/>
+        
+        <menuitem id="menu_product_sold_inherited" name="All Sold Properties" action="action_product_sale_list_sold" parent="property_sold_menu_id" sequence="100"/>
+            
+      </data>
+</openerp>

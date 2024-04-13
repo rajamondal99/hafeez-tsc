@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+        <record id="product_normal_form_view_inherit_surcharge" model="ir.ui.view">
+            <field name="name">product.product.form.surcharge</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="taxes_id" position="after">
+                    <field name="surcharge"/>
+                </field>
+            </field>
+        </record>
+     
+    </data>
+</openerp>

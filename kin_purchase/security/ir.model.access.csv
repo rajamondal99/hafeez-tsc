@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_shipping_term_purchase_user,purchase.shipping.term purchase order,kin_purchase.model_purchase_shipping_term,purchase.group_purchase_user,1,1,1,1
+access_account_payment_term_purchase_user,account.payment.term purchase order,account.model_account_payment_term,purchase.group_purchase_user,1,1,1,1
+access_account_payment_term_line_purchase_user,account.payment.term.line purchase order,account.model_account_payment_term_line,purchase.group_purchase_user,1,1,1,1
+access_product_template_purchase_user,product.product.template purchase order,product.model_product_template,purchase.group_purchase_user,1,1,1,1
+access_product_product_purchase_user,product.product.product purchase order,product.model_product_product,purchase.group_purchase_user,1,1,1,1
+access_product_price_history_purchase_user,product.product.price.history purchase user,product.model_product_price_history,purchase.group_purchase_user,1,1,1,1

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <menuitem name="Commission" id="portal_commissions" parent="portal.portal_menu" sequence="25"/>
+        <menuitem name="Sales Commission"
+                    id="portal_sale_commission"
+                    parent="portal_commissions"
+                    action="ng_sales_commission.sales_commission_action_id"
+                    sequence="10"/>
+        
+        <record model="ir.actions.act_window" id="sales_commission_invoice_action_portal">
+            <field name="name">Sales Commission Invoice - Portal</field>
+            <field name="res_model">sales.commission.invoice</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+        </record>
+        
+        
+        <menuitem name="Sales Commission Invoice"
+                    id="portal_sale_commission_invoice1"
+                    parent="portal_commissions"
+                    action="sales_commission_invoice_action_portal"
+                    sequence="20"/>
+    </data>
+</openerp>

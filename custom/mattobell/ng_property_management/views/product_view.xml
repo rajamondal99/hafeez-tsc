@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="product_view_inherit_default_estatecode" model="ir.ui.view">
+            <field name="name">product.view.estatecode</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_policy']" position="after">
+                    <field name="estate_code"/>
+                </xpath>
+                <xpath expr="//div[@name='options']" position="inside">
+                    <div>
+                        <field name="is_estate"/>
+                        <label for="is_estate"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="product_variant_easy_edit_view_inherit_id">
+            <field name="name">product.product</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position='after'>
+                    <field name="estate_code"/>
+                </xpath>
+                <xpath expr="/form/sheet/group[4]" position='after'>
+                    <group string="Configure Installments">
+                        <field name="intallment_ids" nolabel="1"/>
+                    </group>
+                 </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="product_normal_form_view_inherit_id">
+            <field name="name">product.product</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position='after'>
+                    <field name="estate_code"/>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page[@name='notes']" position='after'>
+                    <page string="Configure Installments" name="inst">
+                        <group >
+                            <field name="intallment_ids" nolabel="1"/>
+                        </group>
+                    </page>
+                 </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="product_installment_config_tree_view_id">
+            <field name="name">product.installment.config</field>
+            <field name="model">product.installment.config</field>
+            <field name="arch" type="xml">
+                <tree string="Product Inst" editable="bottom">
+                     <field name="name"/>
+                     <field name="total_sale_price"/>
+                     <field name="total_number_installment"/> 
+                     <field name="allow_commision"/>
+                     <field name="agent_commision" attrs="{'invisible': [('allow_commision', '=', False)]}"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</openerp>

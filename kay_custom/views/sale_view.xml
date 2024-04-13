@@ -1,0 +1,84 @@
+<openerp>
+<data>
+
+  <record id="view_quotation_timer_extend" model="ir.ui.view">
+            <field name="name">sale timer extend</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+		  
+		         <xpath expr="//button[@name='action_confirm']" position="before">
+           
+           <!--         <button name="action_order_disapprove"   string="Put on Hold" class="btn-primary" type="action" 
+			 attrs="{'invisible':[('state', '!=', 'so_to_approve')]}" context="{'show_sale': True}" groups="kin_sales_double_validation.group_show_disapprove_btn"/>-->
+			<button  name="action_revert" string="Revert Back" class="btn-primary" type="object"  attrs="{'invisible':[('state', '!=', 'no_sale')]}" 
+                        context="{'show_sale': True}" groups="kin_sales_double_validation.group_show_approve_btn"/>
+                 </xpath>
+		
+     <field name="team_id" position="replace">
+<!--                <field name="vertical_manager_time_start" string="Vertical Manager Approval Time Start"  attrs="{'invisible':[('state', 'not in', [ 'to_accept'])]}" />
+                    <field name="vertical_manager_time_end" string="Time End" attrs="{'invisible':[('state', 'not in', [ 'to_accept'])]}" />
+		   <field name="sales_order_conversion_time_start" string="Sales Conversion Time Start"  attrs="{'invisible':[('state', 'not in', [ 'waiting'])]}" />
+                    <field name="sales_order_conversion_time_end" string="Sales Conversion Time End" attrs="{'invisible':[('state', 'not in', [ 'waiting'])]}" />   -->
+			<field name="team_id" string="Sales Channel"/>
+<!--			<label string="Vertical Manager Timeout start" attrs="{'invisible':[('state', 'not in', ['to_accept'])]}" for="vertical_manager_time_start"/>-->
+	<!--		<field name="vertical_manager_time_start" string="Vertical Manager Approval Time Start"  attrs="{'invisible':[('state', 'not in', [ 'to_accept'])]}" widget="widgetonbutton" style="background-color:red;color:white;"/>-->
+<!--			 <label string="Quotation Conversion Timeout Starts" attrs="{'invisible':[('state', 'not in', ['waiting'])]}" for="sales_order_conversion_time_start"/>-->
+			 <field name="sales_order_conversion_time_start" string="Sales Conversion Time Start"  attrs="{'invisible':[('state', 'not in', [ 'waiting'])]}" style="background-color:red;color:white;"/>
+<!--			<label string="Sales order approval Timeout Starts" attrs="{'invisible':[('state', 'not in', ['so_to_approve'])]}" for="sales_order_approval_time_start"/>-->
+                         <field name="sales_order_approval_time_start" string="Sales order approval Time Start"  attrs="{'invisible':[('state', 'not in', [ 'so_to_approve'])]}" style="background-color:red;color:white;"/>
+                </field>
+
+	<xpath expr="//field[@name='discount_amt']"  position="replace">
+		<field name="freight_and_log" />
+
+		</xpath>
+	<xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+		<field name="display_in_report" string="Hide in Print" />
+	</xpath>
+
+            </field>
+        </record>
+
+
+
+
+
+
+ <record id="view_sale_order_readonly" model="ir.ui.view">
+ <field name="name">sale_order_form</field>
+ <field name="model">sale.order</field>
+ <field name="inherit_id" ref="sale.view_order_form" />
+ <field name="groups_id" eval="[(6, 0, [ref('account.group_account_invoice')])]"/>
+ <field name="arch" type="xml">
+ <xpath expr="//field[@name='order_line']" position="attributes">
+    <attribute name="attrs">   {'readonly':[('state','in',['cancel'])]}   </attribute> 
+ </xpath>
+ </field>
+ </record>
+
+
+
+
+
+
+
+  <record id="view_vendor_bill_extend" model="ir.ui.view">
+            <field name="name">Bill extend</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form" />
+            <field name="arch" type="xml">
+
+		<xpath expr="//field[@name='date']" position="after">
+			<field name="sale_order_id" readonly="1"/>
+
+		</xpath>
+
+</field>
+</record>
+
+</data>
+</openerp>
+
+
+

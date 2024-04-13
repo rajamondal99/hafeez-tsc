@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>        
+        <record id="action_make_supplier_invoice" model="ir.actions.server">
+            <field name="name">Create Marketer Invoice</field>
+            <field name="condition">True</field>
+            <field name="model_id" ref="model_sales_commission_invoice"/>
+            <field name="state">code</field>
+            <field name="code">action = pool.get('sales.commission.invoice').action_make_supplier_invoice_wizard(cr, uid, context)</field>
+        </record>
+
+        <record id="ir_open_partial_move_wizard" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'sales.commission.invoice'" name="model"/>
+            <field name="name">Create Marketer Invoice</field>
+            <field eval="'ir.actions.server,%d'%action_make_supplier_invoice" name="value"/>
+        </record>
+    </data>
+</openerp>

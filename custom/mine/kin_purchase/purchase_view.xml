@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+ <!-- <delete model="ir.ui.menu" id="purchase.menu_purchase_rfq"/> -->
+    <menuitem name="Draft PO's / Quotations" action="purchase.purchase_rfq" id="purchase.menu_purchase_rfq"
+            parent="purchase.menu_procurement_management"
+            sequence="0"/>
+
+
+
+        <record id="purchase_order_form_extend" model="ir.ui.view">
+            <field name="name">purchase.order.form.extend</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="arch" type="xml">
+
+                 <field name="account_analytic_id" position="attributes" >
+                     <attribute name="invisible">1</attribute>
+                 </field>
+
+                <xpath expr="//sheet/div[@name='button_box']" position="before">
+                    <div class="alert alert-success text-center o_form_header" attrs="{'invisible': [('show_alert_box', '!=', True)]}">
+                       <button name="close_alert_box" type="object" class="close" data-dismiss="modal"><span aria-hidden="true" class="fa fa-times"></span></button>
+                        <div>
+                            <strong>An email notification will be sent to the inventory personnel for the incoming items</strong>
+                        </div>
+                         <field name="show_alert_box" invisible="1"/>
+                     </div>
+                 </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</openerp>
+
+

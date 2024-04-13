@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+		<record id="group_receive_inventory_invoice_email" model="res.groups">
+			<field name="name">Receive Customer Invoice Email Notification</field>
+		</record>
+
+		<record id="group_receive_purchase_bill_email" model="res.groups">
+			<field name="name">Receive Vendor Bill Email Notification</field>
+		</record>
+
+
+</data>
+</openerp>

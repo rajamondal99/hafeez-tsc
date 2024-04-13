@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+       
+        <!-- Claim Order -->
+        <record model="ir.ui.view" id="claim_order_form_view">
+            <field name="name">claim.order.form</field>
+            <field name="model">claim.order</field>
+            <field name="arch" type="xml">
+                <form string="Unclaimed Deposit">
+                    <header>
+                        <button string="Validate"
+                                name="action_validate"
+                                type="object"
+                                class="oe_highlight"
+                                states="draft" 
+                                groups="account.group_account_user"/> 
+                        <button string="Approve"
+                                name="action_approve"
+                                type="object"
+                                class="oe_highlight"
+                                states="validate"/> 
+                        <button string="Post"
+                                name="action_post"
+                                type="object"
+                                class="oe_highlight"
+                                groups="account.group_account_user"
+                                states="approve"/> 
+                        <button string="Cancel"
+                                name="action_cancel"
+                                type="object"
+                                class="oe_highlight" 
+                                groups="account.group_account_user"
+                                states="validate,approve"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <field name="name" readonly="True"/>
+                        </h1>
+                      <group>
+                        <group>
+                            <field name="journal_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <label for="payment_amount"/>
+                            <div>
+                                <field name="payment_amount" class="oe_inline" attrs="{'readonly': [('state', 'not in', ('draft', 'validate'))]}"/> 
+                                <field class="oe_inline" name="currency_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            </div>
+                            
+                            <field name="customer_id"
+                                    domain="[('customer', '=', True)]"
+                                    attrs="{'readonly': [('state', 'not in', ('draft', 'validate'))]}"/>
+                            <field name="branch_id" attrs="{'readonly': [('state', 'not in', ('draft', 'validate'))]}"/>
+                            <field name="sales_agent_id" attrs="{'readonly': [('state', 'not in', ('draft', 'validate'))]}"/>  
+                            <field name="sales_commission_id" 
+                                   domain="[('sales_agent_id', '=', sales_agent_id)]"
+                                    attrs="{'readonly': [('state', 'not in', ('draft', 'validate'))]}"/>
+                            <field name="agent_commision" attrs="{'readonly': [('state', 'not in', ('draft', 'validate'))]}"/>
+                        </group>
+                        <group>
+                            <field name="payment_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/> 
+                            <field name="company_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/> 
+                            <field name="payment_id"/>
+                        </group>
+                     </group>
+                     <separator string="Property References"/>
+                     <field name="property_ref_ids" 
+                            attrs="{'readonly': [('state', 'not in', ('draft', 'validate'))]}"
+                            />
+
+                     <!--separator string="Invoice Lines"/>
+                     <field name="invoice_line_ids" attrs="{'readonly': [('state', 'not in', ('draft', 'validate'))]}"/-->
+                    </sheet>
+                      <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" help="Follow this project to automatically track the events associated to tasks and issues of this project." groups="base.group_user"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                     </div>
+                </form>
+            </field>
+        </record>
+          
+        <record model="ir.ui.view" id="claim_order_tree_view">
+            <field name="name">claim.order.tree</field>
+            <field name="model">claim.order</field>
+            <field name="arch" type="xml">
+                <tree string="Unclaimed Deposit">
+                     <field name="name"/>
+                     <field name="journal_id"/>
+                     <field name="payment_amount"/>
+                     <field name="payment_date" />
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="claim_order_search_view">
+            <field name="name">claim.order.search</field>
+            <field name="model">claim.order</field>
+            <field name="arch" type="xml">
+                <search string="Unclaimed Deposit">
+                     <field name="name"/>
+                </search>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_claim_order">
+            <field name="name">Unclaimed Deposit</field>
+            <field name="res_model">claim.order</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem id="menu_claim_order"
+                  sequence="3" 
+                  parent="sales_commission_menu_parent_id"
+                  name="Unclaimed Deposit"
+                  action="action_claim_order"
+                  groups="base.group_configuration"/>
+    </data>
+</openerp>

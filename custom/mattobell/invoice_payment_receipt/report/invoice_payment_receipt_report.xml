@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+         <!-- QWeb Reports -->
+        <report
+            id="invoice_payment_receipt_report"
+            model="account.invoice"
+            menu="True"
+            report_type="qweb-pdf"
+            string="Payment Receipt Report"
+            name="invoice_payment_receipt.invoice_payment_receipt_report_id"
+            file="invoice_payment_receipt.invoice_payment_receipt_report_id"
+           />
+        
+        <template id="invoice_payment_receipt_report_id">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="report.external_layout">
+                         <div class="page">
+                             <div>
+                                 <div class="row">
+                                    <div class="col-xs-5 col-xs-offset-7">
+                                        <h5>
+                                            <address t-field="doc.partner_id"
+                                                t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}' />
+                                        </h5>
+                                     </div>
+                                 </div>
+                                 <div>
+                                     <strong><h2>Payment Receipt for Invoice - <span t-field="doc.number"/></h2></strong>
+                                 </div>
+                                 <table class="table table-condensed">
+                                     <tr >
+                                        <td t-if="doc.name">
+                                             <strong>Description</strong>
+                                        </td>
+                                        <td t-if="doc.origin">
+                                             <strong>Your Reference</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Invoice Untaxed Amount</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Invoice Tax Amount</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Invoice Total Amount</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Total Paid Amount</strong>
+                                        </td>
+                                     </tr>
+                                      <tr class="text-center">
+                                        <td t-if="doc.name">
+                                             <span t-field="doc.name"/>
+                                        </td>
+                                        <td t-if="doc.origin">
+                                             <span t-field="doc.origin"/>
+                                        </td>
+                                         <td>
+                                            <span t-field="doc.amount_untaxed"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.amount_tax"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.amount_total"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="doc.amount_total - doc.residual" t-esc-options='{"widget": "monetary", "display_currency": "doc.currency_id"}'/>
+                                        </td>
+                                     </tr>
+                                 </table>
+                                 <h4>
+                                     <div>Payments:</div>
+                                     <table class="table table-responsive">
+                                         <tr class="border-black">
+                                            <td><strong>Sr.No.</strong></td>
+                                            <td><strong>Payment Ref.</strong></td>
+                                            <td><strong>Payment Date </strong></td>
+                                            <td class="text-center"><strong>Payment Method </strong></td>
+                                            <td class="text-right"><strong>Paid Amount</strong></td>
+                                            <td><strong>Memo</strong></td>
+                                         </tr>
+                                         <t t-foreach="doc.payment_ids" t-as="pay">
+                                             <tr>
+                                                  <td><span t-esc="pay_index+1"/></td>
+                                                  <td><span t-esc="pay.name"/></td>
+                                                  <td><span t-field="pay.payment_date" /></td>
+                                                  <td class="text-center"><span t-esc="pay.journal_id.name"/></td>
+                                                  <td class="text-right"><span t-esc="pay.amount" t-esc-options='{"widget": "monetary", "display_currency": "pay.currency_id"}'/></td>
+                                                  <td><span t-esc="pay.communication"/></td>
+                                             </tr>
+                                         </t>
+                                     </table>
+                                 </h4>
+                             </div>
+                           
+                            <div class="row">
+                                   <div class="col-xs-12">
+                                        <br/><span><u>Authorized By</u></span><br/>
+                                        <span t-esc="doc.partner_id.company_id.name"/>
+                                   </div>
+                              </div>
+                              
+                              <div class="row">
+                                   <div class="col-xs-12">
+                                        <h4>
+                                            <strong>Thank you for your business!</strong>
+                                        </h4>
+                                   </div>
+                              </div>
+                              
+                        </div>
+                </t>
+               </t>
+        </template>
+    </data>
+</openerp>

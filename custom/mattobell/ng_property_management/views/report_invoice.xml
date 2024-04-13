@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="report_invoice_document_property1" inherit_id="account.report_invoice_document">
+            <xpath expr="//t/div/div[4]" position="after">
+                <h4>Property Description</h4>
+                <table class="table table-condensed">
+                    <thead>
+                        <th>Property Reference</th>
+                        <th>Property Installment</th>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.invoice_line_ids" t-as="l">
+                            <td><span t-field="l.preoperty_ref_id.name"/></td>
+                            <td><span t-field="l.property_installment_id.name"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </xpath>
+        </template>
+    </data>
+</openerp>

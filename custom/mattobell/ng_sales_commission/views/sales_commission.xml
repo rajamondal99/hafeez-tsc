@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+       
+        <!-- Sales Commission -->
+        <record model="ir.ui.view" id="sales_commission_form_view">
+            <field name="name">Sales Commission</field>
+            <field name="model">sales.commission</field>
+            <field name="arch" type="xml">
+                <form string="Sales Commission">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <field name="number"/>
+                        </h1>
+                      <group string="Sales Commission">
+                        <group>
+                            <field name="sales_agent_id"/>
+                            <field name="sales_person_id"/>
+                            <field name="date" /> 
+                            <field name="agent_commision" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="invoice_id" readonly="True"/>
+                            <field name="invoice_amount" readonly="True"/>
+                            <field name="customer_paid_amount"/>
+                            <field name="agent_received_amount" readonly="True"/> 
+                            <field name="commisionable_amount" readonly="True"/>
+                        </group>
+                     </group>
+                     <notebook string="Invoice Commision">
+                         <page string="Sales Invoice Commision">
+                                 <field name="commision_invoice_ids"/>
+                         </page>
+                     </notebook>
+                    </sheet>
+                      <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" help="Follow this project to automatically track the events associated to tasks and issues of this project." groups="base.group_user"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                     </div>
+                </form>
+            </field>
+        </record>
+          
+        <record model="ir.ui.view" id="sales_commission_tree_view">
+            <field name="name">Sales Commission</field>
+            <field name="model">sales.commission</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Commission">
+                     <field name="sales_agent_id"/>
+                     <field name="sales_person_id"/>
+                     <field name="number"/>
+                     <field name="date" />
+                     <field name="invoice_id"/> 
+                     <field name="invoice_amount"/>
+                     <field name="customer_paid_amount"/>
+                     <field name="agent_received_amount"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="sales_commission_search_view">
+            <field name="name">Sales Commission</field>
+            <field name="model">sales.commission</field>
+            <field name="arch" type="xml">
+                <search string="Sales Commission">
+                     <field name="sales_agent_id"/>
+                     <field name="sales_person_id"/>
+                     <field name="date" />
+                     <filter name="date" string="Date" context="{'group_by':'date'}"/>
+                </search>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="sales_commission_action_id">
+            <field name="name">Sales Commission</field>
+            <field name="res_model">sales.commission</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem id="sales_commission_menu_parent_id" sequence="14" parent="account.menu_finance" 
+            name="Property Management"
+          groups="base.group_configuration,base.group_portal"/>
+        <menuitem id="sales_commission_menu_id" sequence="1" parent="sales_commission_menu_parent_id" name="Sales Commission"
+          action="sales_commission_action_id" groups="base.group_configuration,base.group_portal"/>
+        
+        <!-- Sales Commission Invoice-->
+        
+        <record model="ir.ui.view" id="sales_commission_invoice_form_view">
+            <field name="name">Sales Commission Invoice</field>
+            <field name="model">sales.commission.invoice</field>
+            <field name="arch" type="xml">
+                <form string="Sales Commission Invoice">
+                    <header>
+                          <button string="Confirm" name="confirm_sales_commission"
+                                    type="object" class="oe_highlight" states="draft" 
+                                    groups="account.group_account_invoice,base.group_sale_salesman"/>
+                          <button string="Cancel" groups="account.group_account_invoice,base.group_sale_salesman" name="cancel_sales_commission" type="object" class="oe_highlight" states="draft"/>
+                          <button string="Approve" groups="account.group_account_invoice,base.group_sale_salesman" name="approved_sales_commission" type="object" class="oe_highlight" states="confirm"/>
+                          <button string="Reject" groups="account.group_account_invoice,base.group_sale_salesman" name="reject_sales_commission" type="object" class="oe_highlight" states="confirm"/>
+                          <button string="Generate Marketer Invoice" groups="account.group_account_invoice,base.group_sale_salesman" name="paid_sales_commission" type="object" class="oe_highlight" states="approve"/>
+                          <button string="Cancel" groups="account.group_account_invoice,base.group_sale_salesman" name="cancel_sales_commission" type="object" class="oe_highlight" states="approve"/>
+                          <button string="Reset To Draft" groups="account.group_account_invoice,base.group_sale_salesman" name="draft_sales_commission" type="object" class="oe_highlight" states="cancel,reject"/>
+                          <field name="state" widget="statusbar" statusbar_visible="draft,confirm,approve,paid"/>
+                    </header>
+                    <sheet>
+                        <group string="Sales Commission Invoice">
+                            <group>  
+                                <field name="sales_commission_id"/>
+                                <field name="amount" />
+                                <field name="currency_id" />
+                                <field name="agent_commision" invisible="1"/> 
+                                <field name="company_id"/>
+                            </group>
+                            <group>
+                                <field name="date" /> 
+                                <field name="is_invoiced" readonly="True"/> 
+                                <field name="invoice_id" readonly="1"/> 
+                                <field name="payment_id" /> 
+                                <field name="paid_amount"/>
+                            </group>
+                        </group>
+                        <group string="Accounting">
+                            <group>
+                                <field name="journal_id" groups="account.group_account_invoice,base.group_sale_salesman" />
+                                <field name="revenue_account_id" groups="account.group_account_invoice,base.group_sale_salesman" invisible="1" domain="[('internal_type', '=', 'other')]"/> 
+                                <field name="marketer_account_id" groups="account.group_account_invoice,base.group_sale_salesman" invisible="1" domain="[('internal_type', '=', 'payable')]"/> 
+                            </group>
+                            <group>
+                                <field name="move_id" groups="account.group_account_invoice,base.group_sale_salesman"  readonly="True"/>
+                                <field name="unpaid_move_id" groups="account.group_account_invoice,base.group_sale_salesman" readonly="True"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                          <field name="message_follower_ids" widget="mail_followers" help="Follow this project to automatically track the events associated to tasks and issues of this project." groups="base.group_user"/>
+                          <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="sales_commission_invoice_tree_view">
+            <field name="name">Sales Commission Invoice</field>
+            <field name="model">sales.commission.invoice</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Commission Invoice">
+                     <field name="sales_commission_id"/>
+                     <field name="amount"/>
+                     <field name="currency_id" /> 
+                     <field name="agent_commision" invisible="1"/>  
+                     <field name="paid_amount"/>
+                     <field name="date" /> 
+                     <field name="is_invoiced"/>
+                     <field name="state" />
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="sales_commission_invoice_search_view">
+            <field name="name">Sales Commission Invoice</field>
+            <field name="model">sales.commission.invoice</field>
+            <field name="arch" type="xml">
+                <search string="Sales Commission Invoice">
+                  <field name="sales_commission_id"/>
+                  <filter name="is_invoiced" string="Invoiced" domain="[('is_invoiced','=',True)]"/> 
+                  <filter name="is_not_invoiced" string="Not Invoiced" domain="[('is_invoiced','=',False)]"/>
+                  <filter name="date" string="Date" context="{'group_by':'date'}"/>
+                  <filter name="state" string="State" context="{'group_by':'state'}"/> 
+                </search>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="sales_commission_invoice_action_id">
+            <field name="name">Sales Commission Invoice</field>
+            <field name="res_model">sales.commission.invoice</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_is_not_invoiced': True}</field>
+        </record>
+        
+        <menuitem id="sales_commission_invoice_menu_id" sequence="0" parent="sales_commission_menu_parent_id" name="Sales Commission Invoice"
+          action="sales_commission_invoice_action_id" groups="base.group_configuration"/>
+        
+        <!-- Account Invoice Added Apply Sales Commission Field -->
+        
+        <record model="ir.ui.view" id="view_invoice_form_apply_sales_commission_inherit">
+            <field name="name">account.invoice</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="date_invoice" position="after">
+                    <field name="apply_sales_commission"/>
+                    <field name="invoice_commision_id" readonly="1"/> 
+                    <field name="agent_commision"/>
+                </field>
+                <xpath expr="/form/sheet/notebook/page[1]/field[1]/tree/field[@name='discount']" position='after'>
+                    <field name="agent_commision"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <!-- Sales Order Added Apply Sales Commission Field -->
+        
+        <record model="ir.ui.view" id="view_sale_order_form_apply_sales_commission_inherit">
+            <field name="name">sale.order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/group/group[2]/field[@name='currency_id']" position='after'>
+                    <field name="apply_sales_commission"/>
+                     <label for="agent_commision" attrs="{'invisible': [('apply_sales_commission', '=', False)]}"/>
+                    <div attrs="{'invisible': [('apply_sales_commission', '=', False)]}">
+                        <field name="agent_commision" class="oe_inline" /> 
+                        <button name="set_commission" class="oe_inline oe_link" type="object" string="(Set Commision On Lines)"/>
+                    </div>
+                    
+                </xpath>
+            </field>
+        </record>
+        
+        <!-- Sales Receipt Added Apply Sales Commission Field -->
+        
+        <record model="ir.ui.view" id="view_account_payment_form_apply_sales_commission_inherit">
+            <field name="name">account.payment</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/group/group[2]/field[@name='payment_date']" position='after'>
+                    <field name="sales_agent_id"/>
+                    <field name="apply_sales_commission"/> 
+                    <field name="sales_commision_id" 
+                            attrs="{'invisible': [('apply_sales_commission', '=', False)]}"/> 
+                    <field name="agent_commision" invisible="1"
+                           attrs="{'invisible': [('apply_sales_commission', '=', False)]}"/>
+                    <field name="property_ref_ids" invisible="1" widget="many2many_tags"/>
+                </xpath>
+                <xpath expr="//form/sheet/group" position="after">
+                    <separator string="Commission Lines"/>
+                    <field name="commission_ids">
+                        <tree string="Commission Lines" editable="top">
+                            <field name="invoice_line_id" invisible="True"/> 
+                            <field name="property_ref" domain="[('partner_id', '=', parent.partner_id)]"/>
+                            <field name="line_amount"  invisible="True"/>
+                            <field name="amount"/>
+                            <field name="agent_commision"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <field name="total_amount"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_account_payment_invoice_form_sale_commision">
+            <field name="name">account.payment.invoice.form.sale.commision</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='communication']" position='after'> 
+                    <field name="sales_agent_id"/>
+                    <field name="sale_person_id"/>
+                    <field name="sales_commision_id" 
+                            attrs="{'invisible':[('partner_type', '=', 'supplier')]}"/> 
+                    <field name="agent_commision" invisible="1" attrs="{'invisible':[('partner_type', '=', 'supplier')]}"/>
+                    <field name="property_ref_ids" invisible="1" widget="many2many_tags"/>
+                </xpath>
+                <xpath expr="//form/sheet/group" position="after">
+                    <separator string="Commission Lines"/>
+                    <field name="commission_ids">
+                        <tree string="Commission Lines" editable="top">
+                            <field name="invoice_line_id" invisible="True"/> 
+                            <field name="property_ref" domain="[('partner_id', '=', parent.partner_id)]"/>
+                            <field name="line_amount"  invisible="True"/>
+                            <field name="amount"/>
+                            <field name="agent_commision"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <field name="total_amount"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</openerp>

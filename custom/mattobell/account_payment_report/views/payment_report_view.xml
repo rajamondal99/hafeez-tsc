@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <template id="print_payment_report">
+            <t t-call="report.external_layout">
+                <t t-foreach="objects" t-as="o">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-5 col-xs-offset-7"><br/><br/><br/><br/>
+                            </div>
+                        </div>
+                        <t t-if="o.payment_type == 'inbound'">
+                        <div class="row mt64 mb16">
+                            <table class="table">
+                                <tr style="border-top:hidden;">
+                                    <td>
+                                        <h3><span><b>Reference : </b> <t t-esc="o.name"/></span></h3>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table">
+                                <tr style="border-top:hidden;">
+                                    <td width="20%">
+                                         <span><b>Customer:   </b></span>
+                                    </td>
+                                    <td width="40%">
+                                         <span t-esc="o.partner_id.name"/>
+                                    </td>
+                                    <td width="40%">
+                                         <span><b>Payment Date:   </b></span><span style="color:white;">..</span>
+                                        <span t-esc="formatLang(o.payment_date,date=True)"/>
+                                    </td>
+                                </tr>
+                                <tr style="border-top:hidden;">
+                                    <td width="20%">
+                                         <span><b>Paid by:   </b></span>
+                                    </td>
+                                    <td width="40%">
+                                         <span t-esc="o.journal_id.name"/>
+                                    </td>
+                                    <td width="40%">    
+                                        <span><b>Paid Amount:   </b></span>
+                                        <span t-esc="o.amount"/> <span t-esc="o.currency_id.symbol"/>
+                                    </td>
+                                </tr>
+                                <tr style="border-top:hidden;">
+                                    <td width="20%">
+                                         <span><b>Memo:   </b></span>
+                                    </td>
+                                    <td colspan="2">
+                                         <span t-esc="o.communication"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/><br/>
+                            <table class="table">
+                                <tr style="border-top:hidden;">
+                                    <td style="width:31%;">
+                                        <span><b>Received by: </b><span t-esc="o.create_uid.name"/></span>
+                                    </td>
+                                </tr>
+                                <tr style="border-top:hidden;">
+                                    <td style="width:31%;">
+                                        <span><b>Signature:<span style="color:white;">....</span>___________________________</b></span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/><br/><br/><br/>
+                        <table class="table">
+                            <tr style="border-top:hidden;text-align: center;">
+                                <td>
+                                    <span><b>Thank you for your business!</b></span>  
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+        
+    </data>
+</openerp>

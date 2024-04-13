@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="ng_customer_refund_request_form_view" model="ir.ui.view">
+            <field name="name">customer.refund.request.form.view</field>
+            <field name="model">customer.refund.request</field>
+            <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Confirm" name="action_confirm" states="draft" type="object" class="oe_highlight" />
+                    <button string="Approve" name="action_approved" states="confirm" type="object" class="oe_highlight"/>
+                    <button string="Create Refund" name="action_create_refund_invoice" states="approved" type="object" class="oe_highlight"/>
+<!--                    <button string="Pay" name="action_paid" states="refund_invoiced" type="object" class="oe_highlight"/-->
+                    <button string="Cancel" name="action_cancel" states="draft" type="object" class="oe_highlight"/>
+                    <button string="Reject" name="action_reject" states="confirm" type="object" class="oe_highlight"/>
+                    <field name="state" statusbar_visible="draft,confirm,approved,refund_invoiced" widget="statusbar" colspan="2"/>
+                </header>
+                <sheet>
+                    <h1 class="mt0">
+                        <field name="name" class="oe_inline"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="request_date"/>
+                            <field name="partner_id" />
+                            <field name="product_template_id"/>
+                            <field name="product_id"  domain="[('product_tmpl_id', '=', product_template_id )]" />
+                            <field name="customer_account_id"
+                                   domain="[('partner_id', '=', partner_id), ('product_id', '=', product_id)]"/>
+                            <field name="journal_id"
+                                    attrs="{'readonly': [('state', 'in', ('refund_invoiced', 'cancel', 'reject'))]}"
+                                    groups="account.group_account_invoice"
+                                    domain="[('type', 'in', ('sale',))]"/>
+                            <field name="currency_id"/>
+                            <field name="invoice_id"/>
+                            <field name="refund_state"/>
+                        </group>
+                        <group>
+                            <field name="full_initial_amount" groups="account.group_account_invoice"/>
+                            <field name="amount_paid_to_date"  groups="account.group_account_invoice"/>
+                            <field name="balance" groups="account.group_account_invoice"/>
+                            <field name="surcharge"/>
+                            <field name="refund_amount" groups="account.group_account_invoice"/>
+                            <field name="user_id"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="confirm_date" />
+                            <field name="approved_date" />
+                            <field name="refund_invoiced_date" />
+<!--                            <field name="paid_date" /-->
+                        </group>
+                        <group>
+                            <field name="confirm_by_id" />
+                            <field name="approved_by_id" />
+                            <field name="refund_invoiced_by_id" />
+<!--                            <field name="paid_by_id" /-->
+                        </group>
+                     </group>
+                    <notebook>
+                        <page name="notes" string="Notes">
+                            <group>
+                                 <field name="note" attrs="{'readonly': [('state', '=', 'paid')]}" nolabel="1" placeholder="Add Notes........"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
+            </form>
+            </field>
+        </record>
+       
+        <record id="ng_customer_refund_request_tree_view" model="ir.ui.view">
+            <field name="name">customer.refund.request.tree.view</field>
+            <field name="model">customer.refund.request</field>
+            <field name="arch" type="xml">
+                 <tree string="Customer Refunds">
+                        <field name="name" />
+                        <field name="product_id" />
+                        <field name="surcharge" />
+                        <field name="partner_id"/>
+                        <field name="customer_account_id"/>
+                        <field name="amount_paid_to_date" />
+                        <field name="balance"/>
+                        <field name="refund_amount" />
+                        <field name="refund_state"/>
+                        <field name="state"/>
+                 </tree>
+            </field>
+        </record>
+        
+        <record id="ng_customer_refund_request_search_view" model="ir.ui.view">
+            <field name="name">customer.refund.request.search.view</field>
+            <field name="model">customer.refund.request</field>
+            <field name="arch" type="xml">
+                <search string="Customer Refunds" >
+                    <field name="product_template_id"/>
+                    <field name="partner_id" />
+                    <field name="customer_account_id" />
+                    <group expand="0" string="Group By">
+                        <filter string="Product" domain="[]" context="{'group_by':'product_template_id'}"/>
+                        <filter string="Partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Customer Account" domain="[]" context="{'group_by':'customer_account_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_ng_customer_refund_request">
+            <field name="name">Customer Refunds</field>
+            <field name="res_model">customer.refund.request</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>
+        
+        <menuitem name="Customer Refunds"
+                id="menu_ng_customer_refund_request"
+                action="action_ng_customer_refund_request"
+                parent="ng_sales_commission.sales_commission_menu_parent_id"
+                sequence="20" />
+    </data>
+</openerp>

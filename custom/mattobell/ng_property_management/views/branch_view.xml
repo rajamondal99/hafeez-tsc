@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        #Branch
+        <record model="ir.ui.view" id="branch_view_form">
+            <field name="name">branch.branch.form</field>
+            <field name="model">branch.branch</field>
+            <field name="arch" type="xml">
+                <form string="Branch">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/> 
+                                <field name="zone_id"/>
+                            </group>
+                            <group>
+                                <field name="code"/>
+                            </group>
+                        </group>
+                     </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="branch_view_tree">
+            <field name="name">branch.branch.tree</field>
+            <field name="model">branch.branch</field>
+            <field name="arch" type="xml">
+                <tree string="Branches">
+                     <field name="name"/> 
+                     <field name="code"/>
+                     <field name="zone_id"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="branch_view_search">
+            <field name="name">branch.branch.search</field>
+            <field name="model">branch.branch</field>
+            <field name="arch" type="xml">
+                <search string="Branches">
+                     <field name="name"/>
+                     <field name="code"/>
+                     <field name="zone_id"/>
+                     <group expand="0" string="Group By">
+                         <filter string="Zone" context="{'group_by':'zone_id'}"/>
+                     </group>
+                </search>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_branch_view">
+            <field name="name">Branches</field>
+            <field name="res_model">branch.branch</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem id="menu_branch" 
+                  parent="base.menu_sale_config"
+                  name="Branches"
+                  action="action_branch_view"
+                  groups="base.group_configuration"/>
+        
+        #Zone
+        <record model="ir.ui.view" id="zone_view_form">
+            <field name="name">zone.zone.form</field>
+            <field name="model">zone.zone</field>
+            <field name="arch" type="xml">
+                <form string="Zone">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="code"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="branch_ids"/>
+                        </group>
+                     </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="zone_view_tree">
+            <field name="name">zone.zone.tree</field>
+            <field name="model">zone.zone</field>
+            <field name="arch" type="xml">
+                <tree string="Zones">
+                     <field name="name"/> 
+                     <field name="code"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="zone_view_search">
+            <field name="name">zone.zone.search</field>
+            <field name="model">zone.zone</field>
+            <field name="arch" type="xml">
+                <search string="Zone">
+                     <field name="name"/>
+                     <field name="code"/>
+                </search>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_zone_view">
+            <field name="name">Zones</field>
+            <field name="res_model">zone.zone</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem id="menu_zone" 
+                  parent="base.menu_sale_config"
+                  name="Zones"
+                  action="action_zone_view"
+                  groups="base.group_configuration"/>
+        
+        #Branch-Marketer
+        <record model="ir.ui.view" id="branch_marketer_view_form">
+            <field name="name">branch.marketer.form</field>
+            <field name="model">branch.marketer</field>
+            <field name="arch" type="xml">
+                <form string="Marketer Branch">
+                    <header>
+                        <button name="confirm" type="object" states="draft"
+                                string="Confirm" class="oe_highlight"/>
+                        <button name="approve" type="object" states="confirm"
+                                string="Approve" class="oe_highlight"  groups="base.group_sale_manager"/>
+                        <button name="request" type="object" states="approved,re_assigned"
+                                string="Request for Change" class="oe_highlight"/>
+                        <button name="reassign" type="object" states="request"
+                                string="Re-Assigned" class="oe_highlight" groups="base.group_sale_manager"/>
+                        <button name="cancel" type="object" states="confirm,request"
+                                string="Cancel" class="oe_highlight"/> 
+                         <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="marketer_id"
+                                    attrs="{'readonly': [('state', 'in', ('confirm','re_assigned', 'approved', 'cancelled'))]}"/> 
+                                <field name="zone_id" attrs="{'readonly': [('state', 'in', ('confirm','re_assigned', 'approved', 'cancelled'))]}"/> 
+                                <field name="branch_id" 
+                                    attrs="{'readonly': [('state', 'in', ('confirm','re_assigned', 'approved', 'cancelled'))]}"
+                                    domain="[('zone_id', '=', zone_id)]"/>
+                                <field name="active"/>                            
+                             </group>
+                            <group>
+                                <label class="oe_grey" string="If you want to change zone or branch please drop message in chatter."/>
+                            </group>
+                        </group>
+                     </sheet>
+                     <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" help="Follow this project to automatically track the events associated to tasks and issues of this project." groups="base.group_user"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                     </div>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="branch_marketer_view_tree">
+            <field name="name">branch.marketer.tree</field>
+            <field name="model">branch.marketer</field>
+            <field name="arch" type="xml">
+                <tree string="Marketer Branch">
+                    <field name="marketer_id"/> 
+                    <field name="zone_id"/> 
+                    <field name="branch_id" />
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="branch_marketer_view_search">
+            <field name="name">branch.marketer.search</field>
+            <field name="model">branch.marketer</field>
+            <field name="arch" type="xml">
+                <search string="Marketer Branch">
+                    <field name="marketer_id"/> 
+                    <field name="zone_id"/> 
+                    <field name="branch_id"/>
+                    <field name="state" />
+                    <group expand="0" string="Group By">
+                         <filter string="Zone" context="{'group_by':'zone_id'}"/> 
+                         <filter string="Branch" context="{'group_by':'branch_id'}"/> 
+                         <filter string="Marketer" context="{'group_by':'marketer_id'}"/>
+                         <filter string="State" context="{'group_by':'state'}"/>
+                     </group>
+                </search>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_branch_marketer_view">
+            <field name="name">Marketer Branch</field>
+            <field name="res_model">branch.marketer</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem id="menu_branch_marketer" 
+                  parent="base.menu_sale_config"
+                  name="Assign Marketer"
+                  action="action_branch_marketer_view"
+                  groups="base.group_configuration"/>
+        
+                      
+                      
+        <record model="ir.ui.view" id="view_employee_form_property">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='work_phone']" position='after'>
+                    <field  name="zone_id"/>
+                    <field  name="branch_id"  domain="[('zone_id', '=', zone_id)]"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

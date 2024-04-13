@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <record id="action_account_partner_ledger_menu1" model="ir.actions.act_window">
+        <field name="name">Print Customer/Supplier Statement</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.report.partner.ledger.statement</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="account_extra_reports.account_report_partner_ledger_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <record model="ir.values" id="ir_values_partner_statement">
+       <field name="key2" eval="'client_print_multi'"/>
+       <field name="model" eval="'res.partner'"/>
+       <field name="name">Print Customer/Supplier Statement</field>
+       <field name="value" eval="'ir.actions.act_window,%d'%action_account_partner_ledger_menu1"/>
+    </record>
+    </data>
+</openerp>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Sequence-->
+        <record id="seq_customer_refund_request" model="ir.sequence">
+            <field name="name">Customer Refund Request</field>
+            <field name="code">customer.refund.request</field>
+            <field name="prefix">REFUND-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</openerp>

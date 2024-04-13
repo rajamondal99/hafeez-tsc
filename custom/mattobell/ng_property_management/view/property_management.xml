@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+        <record model="ir.ui.view" id="product_variant_easy_edit_view_inherit_id">
+            <field name="name">product.product</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/group[4]" position='after'>
+                    <group string="Configure Installments">
+                        <field name="intallment_ids" nolabel="1"/>
+                    </group>
+                 </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="product_normal_form_view_inherit_id">
+            <field name="name">product.product</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page[@name='notes']" position='after'>
+                    <page string="Configure Installments" name="inst">
+                        <group >
+                            <field name="intallment_ids" nolabel="1"/>
+                        </group>
+                    </page>
+                 </xpath>
+            </field>
+        </record>
+        
+        
+        <record model="ir.ui.view" id="product_installment_config_tree_view_id">
+            <field name="name">product.installment.config</field>
+            <field name="model">product.installment.config</field>
+            <field name="arch" type="xml">
+                <tree string="Poroduct Inst" editable="bottom">
+                     <field name="name"/>
+                     <field name="total_sale_price"/>
+                     <field name="total_number_installment"/>
+                     <field name="agent_commision"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="sales_agent_form_view_id1">
+            <field name="name">sales.agent</field>
+            <field name="model">sales.agent</field>
+            <field name="arch" type="xml">
+                <form string="Sales Agent">
+                    <sheet>
+                      <group string="Sales Agent">
+                        <group>  
+                            <field name="name"/>
+                        </group>
+                        <group/>
+                         </group>
+                     </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="sales_agent_tree_view_id1">
+            <field name="name">sales.agent</field>
+            <field name="model">sales.agent</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Agent">
+                     <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="sales_agent_action_id">
+            <field name="name">Sales Agent</field>
+            <field name="res_model">sales.agent</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem id="sales_agent_menu_id" sequence="13" parent="base.menu_sale_config" name="Sales Agents" action="sales_agent_action_id"
+          groups="base.group_configuration"/>
+        
+        
+        <record model="ir.ui.view" id="sales_agent_commission_tree_view_id">
+            <field name="name">sales.agent.commision</field>
+            <field name="model">sales.agent.commision</field>
+            <field name="arch" type="xml">
+                <tree string="Commission" editable="bottom">
+                     <field name="no_months"/>
+                     <field name="commission_percentage"/>
+                </tree>
+            </field>
+        </record>
+        
+        
+        <record model="ir.ui.view" id="sales_agent_partner_form_view_id">
+            <field name="name">sales.agent.partner</field>
+            <field name="model">sales.agent.partner</field>
+            <field name="arch" type="xml">
+                <form string="Sales Agent Partner">
+                    <sheet>
+                      <group string="Sales Agent Partner">
+                        <group>  
+                            <field  name="agent_id"/>
+                            <field  name="partner_id" domain="[('is_agent', '=' , True)]"/>
+                            <field  name="user_id" />
+                        </group>
+                        <group/>
+                         </group>
+                     </sheet>
+                </form>
+            </field>
+        </record>
+        
+        
+        <record model="ir.ui.view" id="sales_agent_partner_tree_view_id">
+            <field name="name">sales.agent.partner</field>
+            <field name="model">sales.agent.partner</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Agent Partner">
+                     <field  name="agent_id"/>
+                     <field  name="partner_id"/>
+                     <field  name="user_id"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="sales_agent_partner_search_view">
+            <field name="name">sales.agent.partner</field>
+            <field name="model">sales.agent.partner</field>
+            <field name="arch" type="xml">
+                <search string="Sales Agent Partner">
+                     <field  name="agent_id"/>
+                     <field  name="partner_id"/>
+                     <field  name="user_id"/>
+                </search>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="sales_agent_partner_action_id">
+            <field name="name">Sales Agent Partner</field>
+            <field name="res_model">sales.agent.partner</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        
+        <menuitem id="sales_agent_partner_menu_id" sequence="14" parent="base.menu_sale_config" name="Sales Agent Partners"
+         action="sales_agent_partner_action_id" groups="base.group_configuration"/>
+  
+        <record model="ir.ui.view" id="view_sale_order_form_generate_inherit_id">
+            <field name="name">sale.order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/header/button[7][@name='action_confirm']" position='after'>
+                    <button name="generate_account_no" attrs="{'invisible': [('property_ref_generated', '=', True)]}" string="Generate Property Ref" class="btn-primary" type="object"/>
+                 </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_sale_order_form_inherit_agent_id">
+            <field name="name">sale.order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/group/group[2]/field[@name='currency_id']" position='after'>
+                    <field  name="agent_id"/>
+                    <field  name="property_ref_generated" invisible="1"/>
+                    <field  name="need_property_ref"/>
+                 </xpath>
+            </field>
+        </record>
+       
+        <record model="ir.ui.view" id="view_sale_order_line_account_no_inherit_id">
+            <field name="name">sale.order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page[1]/field[1]/tree/field[@name='name']" position='after'>
+<!--                    <field  name="account_no"/-->
+                    <field  name="preoperty_ref_id" domain="[('partner_id', '=' , parent.partner_id)]"/>
+                    <field  name="property_installment_id" domain="[('product_id', '=' , product_id)]"/>
+                 </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_sale_order_line_form_account_no_inherit_id">
+            <field name="name">sale.order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page[1]/field[1]/form/group/group[1]/field[@name='price_unit']" position='after'>
+<!--                    <field  name="account_no"/-->
+                    <field  name="preoperty_ref_id" domain="[('partner_id', '=' , parent.partner_id)]"/>
+                    <field  name="property_installment_id" domain="[('product_id', '=' , product_id)]"/>
+                 </xpath>
+            </field>
+        </record>
+        
+        <record id="action_product_sale_list_sold" model="ir.actions.act_window">
+            <field name="name">Sale Order Lines</field>
+            <field name="res_model">sale.order.line</field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_sale_order_line_reference_inherit_id">
+            <field name="name">sale.order.line</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_order_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="/tree/field[2][@name='order_id']" position='after'>
+<!--                    <field  name="account_no"/-->
+                    <field  name="preoperty_ref_id"/>
+                    <field  name="property_installment_id" domain="[('product_id', '=' , product_id)]"/>
+                 </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_sale_order_line_reference_search_inherit_id">
+            <field name="name">sale.order.line</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="/search/field[@name='salesman_id']" position='after'>
+<!--                    <field name="account_no"/-->
+                    <field  name="preoperty_ref_id" />
+                 </xpath>
+            </field>
+        </record>
+        
+        <!-- Sale Property Reference-->
+        
+        <record model="ir.ui.view" id="sale_property_reference_form_view">
+            <field name="name">sale.property.reference</field>
+            <field name="model">sale.property.reference</field>
+            <field name="arch" type="xml">
+                <form string="Sale Property Reference">
+                    <sheet>
+                      <group string="Sale Property Reference">
+                        <group>  
+                            <field  name="name"/>
+                            <field  name="partner_id"/>
+                        </group>
+                        <group/>
+                         </group>
+                     </sheet>
+                </form>
+            </field>
+        </record>
+        
+        
+        <record model="ir.ui.view" id="sale_property_reference_tree_view">
+            <field name="name">sale.property.reference</field>
+            <field name="model">sale.property.reference</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Property Reference">
+                     <field  name="name"/>
+                     <field  name="partner_id"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="sale_property_reference_action_id">
+            <field name="name">Sale Property Reference</field>
+            <field name="res_model">sale.property.reference</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        
+        <record model="ir.ui.view" id="view_partner_form_isagent_inherit">
+            <field name="name">res.partner</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+<!--                    <field  name="account_no"/-->
+                    <field  name="is_agent"/>
+                 </field>
+            </field>
+        </record>
+        
+    
+        <record model="ir.ui.view" id="view_invoice_form_need_propert_ref_inherited">
+            <field name="name">account.invoice</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="date_invoice" position="after">
+                    <field  name="need_property_ref"/>
+                    <field  name="agent_id" invisible="1"/>
+                </field>
+                <xpath expr="/form/sheet/notebook/page[1]/field[1]/tree/field[@name='name']" position='after'>
+                    <field  name="preoperty_ref_id" domain="[('partner_id', '=' , parent.partner_id)]"/>
+                    <field  name="property_installment_id" domain="[('product_id', '=' , product_id)]"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_invoice_line_form_property_ref_inherited">
+            <field name="name">account.invoice.line</field>
+            <field name="model">account.invoice.line</field>
+            <field name="inherit_id" ref="account.view_invoice_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/group/group[2]/field[@name='invoice_line_tax_ids']" position='after'>
+                    <field  name="preoperty_ref_id" domain="[('partner_id', '=' , parent.partner_id)]"/>
+                    <field  name="property_installment_id" domain="[('product_id', '=' , product_id)]"/>
+                </xpath>
+            </field>
+        </record>
+       
+        <record model="ir.ui.view" id="view_sale_order_form_inherit_agent_id">
+            <field name="name">sale.order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/group/group[2]/field[@name='currency_id']" position='after'>
+                    <field  name="agent_id"/>
+                    <field  name="property_ref_generated" invisible="1"/>
+                    <field  name="need_property_ref"/>
+                 </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_sale_advance_payment_inv_property_ref_inherited">
+            <field name="name">sale.advance.payment.inv</field>
+            <field name="model">sale.advance.payment.inv</field>
+            <field name="inherit_id" ref="sale.view_sale_advance_payment_inv"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/group/div" position='after'>
+                    <field name="partner_id"/>
+                    <field name="plot_product_id" attrs="{'invisible': [('advance_payment_method', 'not in', ('fixed','percentage'))]}"/>
+                    <field  name="preoperty_ref_id" 
+                    attrs="{'invisible': [('advance_payment_method', 'not in', ('fixed','percentage'))]}" 
+                    domain="[('partner_id', '=' ,  partner_id)]"/>
+                    <field  name="property_installment_id" domain="[('product_id', '=' , plot_product_id)]"
+                    attrs="{'invisible': [('advance_payment_method', 'not in', ('fixed','percentage'))]}"/>
+                 </xpath>
+            </field>
+        </record>
+        
+        <menuitem id="sale_property_reference_menu_id" sequence="14" parent="base.menu_sale_config" name="Sale Property Reference"
+         action="sale_property_reference_action_id" groups="base.group_configuration"/>
+        
+        <menuitem name="Property"
+            id="property_management_menu_id" groups="base.group_sale_salesman,base.group_sale_manager"
+            parent="base.menu_base_partner" sequence="41"
+            />
+        
+        <menuitem id="base.menu_product_inherited" name="All Plots" action="product.product_normal_action_sell" parent="property_management_menu_id" sequence="100"/>
+        <menuitem id="base.menu_product" name="Properties/Lands/Estates" action="product.product_template_action" parent="property_management_menu_id" sequence="1"/>
+    
+        <menuitem name="Property Sold"
+            id="property_sold_menu_id" groups="base.group_sale_salesman,base.group_sale_manager"
+            parent="base.menu_base_partner" sequence="42"/>
+        
+        <menuitem id="menu_product_sold_inherited" name="All Sold Properties" action="action_product_sale_list_sold" parent="property_sold_menu_id" sequence="100"/>
+            
+      </data>
+</openerp>

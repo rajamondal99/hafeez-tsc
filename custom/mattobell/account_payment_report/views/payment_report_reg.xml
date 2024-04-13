@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>
+        <report id="print_account_payment"
+                string="Print Customer Receipt" 
+                model="account.payment"
+                report_type="qweb-pdf"
+                file = "account_payment_report.print_payment_report"
+                name ="account_payment_report.print_payment_report"/>
+    </data>
+
+</openerp>
+
+
+

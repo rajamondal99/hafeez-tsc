@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <menuitem name="Lab"
+            id="base.menu_base_partner"
+            web_icon="sale,static/description/icon.png"
+            sequence="6"/>
+
+         <record id="view_kin_client_form" model="ir.ui.view">
+            <field name="name">kin.client</field>
+            <field name="model">kin.client</field>
+            <field name="arch" type="xml">
+                    <form  string="Clients">
+                        <sheet>
+                            <group>
+                                <group>
+                                    <field name="name" />
+                                    <field name="client_id" />
+                                    <field name="address" />
+                                </group>
+                                <group>
+                                    <field name="phone" />
+                                    <field name="mobile" />
+                                    <field name="email" />
+                                </group>
+                            </group>
+                            <group>
+                                <field name="note" />
+                            </group>
+                        </sheet>
+                    </form>
+            </field>
+        </record>
+
+
+        <record id="view_kin_lab_document_form" model="ir.ui.view">
+            <field name="name">kin.lab.document</field>
+            <field name="model">kin.lab.document</field>
+            <field name="arch" type="xml">
+                    <form  string="Diagnosis Document">
+                        <sheet>
+                            <group>
+                                <group>
+                                    <field name="name" />
+                                    <field name="referring_id" />
+                                </group>
+                                <group>
+                                    <field name="phone" />
+                                    <field name="mobile" />
+                                    <field name="email" />
+                                </group>
+                            </group>
+                            <group>
+                                <field name="note" />
+                            </group>
+                        </sheet>
+                    </form>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

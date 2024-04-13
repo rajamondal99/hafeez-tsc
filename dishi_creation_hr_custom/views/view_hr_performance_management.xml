@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Main form view -->
+        <record id="employee_evaluation_form" model="ir.ui.view">
+            <field name="name">employee.evaluation.form</field>
+            <field name="model">employee.evaluation</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+
+                            <button string="Submit for Approval" class="oe_button oe_highlight" type="object" name="action_submit_approval" states="draft"/>
+                            <button string="Approve" class="oe_button oe_highlight" type="object" name="action_approve" states="awaiting_manager_approval,awaiting_hr_approval"/>
+                            <button string="Reject" class="oe_button oe_highlight" type="object" name="action_reject" states="awaiting_manager_approval,awaiting_hr_approval"/>
+                        <!-- Other buttons... -->
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="employee_id" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="job_title" readonly="1"/>
+                                <field name="department" readonly="1"/>
+                                <field name="supervisor_name"/>
+                                <field name="manager_job_title" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="employment_date" readonly="1"/>
+                                <field name="length_of_time_in_company" readonly="1"/>
+                                <field name="length_of_time_in_role"/>
+                                <field name="review_period_start" widget="date"/>
+                                <field name="review_period_end" widget="date"/>
+                            </group>
+                            <field name="section1" invisible="1"/>
+                            <field name="section2" invisible="1"/>
+                            <field name="section3" invisible="1"/>
+                            <field name="section4" invisible="1"/>
+                            <field name="section5" invisible="1"/>
+
+                        </group>
+
+                        <!-- Section I: Evaluation Goals -->
+                        <!-- Conditionally display evaluation_goals based on user's group -->
+                        <group string="SECTION I: EVALUATION GOALS RELATING TO KEY JOB ELEMENTS (60%)"
+                               attrs="{'invisible': [('section1', '!=', False)]}">
+                            <field name="evaluation_goals" widget="one2many_list" editable="bottom">
+
+                                <tree editable="top">
+                                    <field name="name"/>
+                                    <field name="key_result_areas"/>
+                                    <field name="outcomes"/>
+                                    <field name="employee_rating"/>
+                                    <field name="employee_comments"/>
+                                    <field name="manager_rating"/>
+                                    <field name="manager_comments"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                        <!-- Section II: Competencies -->
+                        <group string="SECTION 2: COMPETENCIES" attrs="{'invisible': [('section2', '=', True)]}" groups="base.group_hr_manager,dishi_creation_hr_custom.group_view_evaluation_form">
+                            <field name="competencies" widget="one2many_list" editable="bottom">>
+                                <tree editable="top">
+                                    <field name="performance_category"/>
+                                    <field name="employee_rating"/>
+                                    <field name="supervisor_rating"/>
+                                    <field name="supervisor_comments"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                        <!-- Section III: Supervisor/Appraiser’s Comments -->
+                        <group string="SECTION 3 – SUPERVISOR/APPRAISER’S COMMENTS ON STAFF DEVELOPMENT NEEDS AND OVERALL COMMENTS"
+                               attrs="{'invisible': [('section3', '=', True)]}" groups="base.group_hr_manager,dishi_creation_hr_custom.group_view_evaluation_form">
+                            <field name="key_strengths"/>
+                            <field name="recommended_trainings" widget="one2many_list">
+                                <tree editable="top">
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                            <!-- overall comments -->
+                            <field name="overall_comments"/>
+                            <!--                            <field name="supervisor_name"/>-->
+                            <field name="supervisor_signature"/>
+                            <field name="date"/>
+                        </group>
+                        <!-- Section IV: Future Goals for the Employee -->
+                        <group string="SECTION 4: FUTURE GOALS FOR THE EMPLOYEE (To be completed after the appraisals.Employee and Supervisor are to agree on the KRAs and KPIs"
+                               attrs="{'invisible': [('section4', '=', True)]}" groups="base.group_hr_manager,dishi_creation_hr_custom.group_view_evaluation_form">
+                            <field name="future_goals" widget="one2many_list">
+                                <tree editable="top">
+                                    <field name="objectives"/>
+                                    <field name="kra"/>
+                                    <field name="kpi"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                        <!-- Section V: Reward/Consequent Recommendation -->
+                        <group string="SECTION 5: REWARD/CONSEQUENT RECOMMENDATION (TO BE COMPLETED BY REVIEW TEAM)"
+                               attrs="{'invisible': [('section5', '=', True)]}" groups="base.group_hr_manager,dishi_creation_hr_custom.group_view_evaluation_form">
+                            <field name="reward_recommendation"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Menu Action -->
+        <record id="action_employee_evaluation" model="ir.actions.act_window">
+            <field name="name">Employee Evaluations</field>
+            <field name="res_model">employee.evaluation</field>
+            <field name="view_mode">tree,form</field>
+            <!-- Add more configuration options as needed -->
+        </record>
+
+        <!-- Main menu item -->
+        <menuitem id="menu_employee_evaluation"
+                  name="Employee Evaluation"
+                  parent="hr.menu_hr_root"
+                  sequence="20"/>
+
+        <menuitem id="menu_employee_evaluation_form"
+                  name="Employee Evaluation Form"
+                  parent="menu_employee_evaluation"
+                  action="action_employee_evaluation"/>
+    </data>
+</openerp>

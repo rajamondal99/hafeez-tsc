@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="account_payment_group_view_form_extend" model="ir.ui.view"  >
+            <field name="name" >account.payment.group.form.extend</field>
+            <field name="model">account.payment.group</field>
+            <field name="inherit_id" ref="account_payment_group.view_account_payment_group_form" />
+            <field name="arch" type="xml" >
+                    <xpath  expr="//div[@class='oe_title']" position="replace">
+                                <div class="oe_title"  >
+                                    <h2><field name="name" attrs="{'invisible': [('state', '==', 'draft')]}"  /></h2>
+                                    <p attrs="{'invisible': [('state', '!=', 'draft')]}"  >Draft Receipt</p>
+                                </div>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="account_payment_group_view_tree_extend" model="ir.ui.view"  >
+            <field name="name" >account.payment.group.tree.extend</field>
+            <field name="model">account.payment.group</field>
+            <field name="inherit_id" ref="account_payment_group.view_account_payment_group_tree" />
+            <field name="arch" type="xml" >
+                <field name="payment_date" position="before" >
+                    <field name="name" attrs="{'invisible': [('state', '==', 'draft')]}"  />
+                </field>
+            </field>
+        </record>
+
+
+         <record id="account_payment_group_view_search_extend" model="ir.ui.view"  >
+            <field name="name" >account.payment.group.search.extend</field>
+            <field name="model">account.payment.group</field>
+            <field name="inherit_id" ref="account_payment_group.view_account_payment_group_search" />
+            <field name="arch" type="xml" >
+                <field name="display_name" position="after" >
+                    <field name="name" />
+                </field>
+            </field>
+        </record>
+
+
+
+
+
+    </data>
+</openerp>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_fastra_payslip_report_wizard" model="ir.ui.view">
+            <field name="name">view.fastra.payslip.report.wizard</field>
+            <field name="model">fastra.payslip.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Payslip Report Wizard">
+                    <label string="This wizard will help  generate the .xls payslip report"/>
+                    <group col="4" colspan="4">
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="rule_ids">
+                            <field name="name"/>
+                        </field>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Employees">
+                            <group colspan="4">
+                                <field name="employee_ids" nolabel="1">
+                                    <field name="name"/>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button icon="gtk-execute" name="fastra_payslip_report" string="Export as Excel" type="object" colspan="2" class="oe_highlight"/>
+                        or
+                        <button special="cancel" class="oe_link" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_fastra_payslip_report_wizard" model="ir.actions.act_window">
+            <field name="name">action.fastra.payslip.report.wizard</field>
+            <field name="res_model">fastra.payslip.report.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_fastra_payslip_report_wizard"/>
+            <field name="context">{}</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_fastrs_payslip_report_excel" name="Payslip Excel Report-Fastra" parent="hr_payroll.menu_hr_payroll_root" sequence="20" action="action_fastra_payslip_report_wizard" icon="STOCK_PRINT"/>
+    </data>
+</openerp>

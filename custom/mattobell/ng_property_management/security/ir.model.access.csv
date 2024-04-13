@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+ng_property_management_product_installment_config,ng_property_management.installment,model_product_installment_config,base.group_sale_salesman,1,1,1,1
+ng_property_management_sales_agent,ng_property_management.agent,model_sales_agent,base.group_sale_salesman,1,1,1,1
+ng_property_management_sales_agent_partner,ng_property_management.agentpartner,model_sales_agent_partner,base.group_sale_salesman,1,1,1,1
+ng_property_management_sales_agent_commission,ng_property_management.agentcommission,model_sales_agent_commision,base.group_sale_salesman,1,1,1,1
+ng_property_management_sale_property_reference,ng_property_management.salepropertyreference,model_sale_property_reference,base.group_sale_salesman,1,1,1,1
+ng_property_management_product_installment_config,ng_property_management.installment,model_product_installment_config,base.group_sale_salesman,1,1,1,1
+product_installment_config_public_user,product.installment.config.public.user,model_product_installment_config,base.group_public,1,0,0,0
+sales_agent_public_user,sales_agent.public.user,model_sales_agent,base.group_public,1,0,0,0
+branch_public_user,branch.public.user,model_branch_branch,base.group_public,1,0,0,0
+zone_public_user,zone.public.user,model_zone_zone,base.group_public,1,0,0,0
+branch_marketer_public_user,branch.marketer.public.user,model_branch_marketer,base.group_public,1,0,0,0

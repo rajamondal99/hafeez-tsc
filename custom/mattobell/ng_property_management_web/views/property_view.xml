@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="invoice_form_inherit_sale_agent" model="ir.ui.view">
+            <field name='name'>account.invoice.form.sale.agent</field>
+            <field name='model'>account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name='arch' type='xml'>
+                <xpath expr="//field[@name='team_id']" position="after">
+                    <field name="agent_id" readonly="0" invisible="0"/> 
+                    <field name="use_installment_invoice" readonly="True"/>
+                </xpath>
+                <xpath expr="//field[@name='date_due']" position="after">
+                    <field name="clearing_move_id"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_order_form_inherit_property" model="ir.ui.view">
+            <field name='name'>sale.order.form.property.ref</field>
+            <field name='model'>sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name='arch' type='xml'>
+                <xpath expr="//button[@name='print_quotation']" position="after">
+                    <!--button name="create_installment_invoices"
+                            string="Create Installment Invoice" 
+                            type="object" 
+                            class="btn-primary" 
+                            attrs="{'invisible': ['|', ('is_done_all_installments', '=', True), ('state', '!=', 'sale')]}"/-->
+                </xpath>
+                <xpath expr="//field[@name='project_id']" position="after">
+                    <field name="use_installment_invoice"/> 
+<!--                    <field name="create_automatic_installment_invoice"/-->
+                </xpath>
+                <xpath expr="//sheet/notebook/page[1]/field[1]/tree/field[@name='price_unit']" position="after">
+                    <field name="price_unit_installment"/>
+                    <field name="base_sale_price"/>
+                </xpath>
+<!--                <xpath expr="//sheet/notebook/page[1]/field[1]/tree/field[@name='price_unit']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//sheet/notebook/page[1]/field[1]/form/group/group[1]/field[@name='price_unit']" position="after">
+                    <field name="price_unit_installment"/>
+                    <field name="base_sale_price"/>
+                </xpath>
+<!--                <xpath expr="//sheet/notebook/page[1]/field[1]/form/group/group[1]/field[@name='price_unit']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//sheet/notebook/page[1]/field[1]/tree/field[@name='price_subtotal']" position="after">
+                    <field name="price_subtotal_property"/>
+                </xpath>
+                <xpath expr="//sheet/notebook/page[1]/field[1]/form/group/group[1]/div[1]/field[@name='product_uom_qty']" position="after">
+                    <field name="installment_number"/>
+                </xpath>
+                <!-- xpath expr="//sheet/notebook/page[1]/field[1]/tree/field[@name='price_subtotal']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath-->
+                <xpath expr="//sheet/notebook/page[1]/field[1]/tree/field[@name='product_uom_qty']" position="after">
+                    <field name="installment_number"/>
+                </xpath>
+                <xpath expr="//sheet/notebook/page[1]/group" position="after">
+                    <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                        <field name="amount_untaxed_property" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        <field name="amount_tax_property" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                            <label for="amount_total_property" />
+                            <button name="button_dummy"
+                                states="draft,sent" string="(update)" type="object" class="oe_edit_only oe_link"/>
+                        </div>
+                        <field name="amount_total_property" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                    </group>
+                </xpath>
+                <!--xpath expr="//sheet/notebook/page[1]/group" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath-->
+                <xpath expr="//form/sheet/notebook/page[2]" position="after">
+                    <page string="Installment Invoices"> 
+                        <group>
+                            <group>
+                                <field name="is_done_all_installments"/>
+                            </group>
+                            <group/>
+                        </group>
+                        <field name="installment_invoice_ids"/>
+                    </page>
+                </xpath>
+                <xpath expr="//sheet/notebook/page[1]/field[1]/form/group/group[1]/div[1]/field[@name='product_uom_qty']" position="after">
+                    <field name="done_installment" invisible="True"/>
+                </xpath>
+                <xpath expr="//sheet/notebook/page[1]/field[1]/tree/field[7]" position="after">
+                    <field name="done_installment" invisible="True"/>
+                </xpath>
+                <xpath expr="//sheet/notebook/page[1]/field[1]/tree" position="attributes">
+                    <attribute name="decoration-muted">done_installment==True</attribute>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="sales_agent_form_view_id1_agent_id" model="ir.ui.view">
+            <field name='name'>sales.agent.form.agent.id</field>
+            <field name='model'>sales.agent</field>
+            <field name="inherit_id" ref="ng_property_management.sales_agent_form_view_id1"/>
+            <field name='arch' type='xml'>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="agent_id" /> 
+                    <field name="agent_name" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="account.action_move_journal_line" model="ir.actions.act_window">
+            <field name="context">{}</field>
+        </record>
+    </data>
+</openerp>

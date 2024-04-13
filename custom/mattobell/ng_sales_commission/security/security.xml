@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Sale Commissions Portal Access Rules -->
+        <record id="portal_sale_commission_user_rule" model="ir.rule">
+            <field name="name">Portal Personal Commissions</field>
+            <field name="model_id" ref="ng_sales_commission.model_sales_commission"/>
+            <field name="domain_force">[('sales_person_id','=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        </record>
+        
+        <record id="portal_sale_commission_manager_rule" model="ir.rule">
+            <field name="name">Manager Personal Commissions</field>
+            <field name="model_id" ref="ng_sales_commission.model_sales_commission"/>
+            <field name="domain_force">[(1,'=', 1)]</field>
+            <field name="groups" eval="[(4, ref('account.group_account_invoice')), (4, ref('base.group_sale_salesman'))]"/>
+        </record>
+        
+        <record id="portal_payment_sale_commission_rule" model="ir.rule">
+            <field name="name">Portal Payment</field>
+            <field name="model_id" ref="account.model_account_payment"/>
+            <field name="domain_force">[('sale_person_id','=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        </record>
+        <!-- Sale Commission Invoice Portal Access Rules -->
+        <record id="portal_sale_commission_invoice_user_rule" model="ir.rule">
+            <field name="name">Portal Personal Commissions Invoice</field>
+            <field name="model_id" ref="model_sales_commission_invoice"/>
+            <field name="domain_force">[('sales_commission_id.sales_person_id','=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        </record>
+        <record id="portal_sale_commission_invoice_manager_rule" model="ir.rule">
+            <field name="name">Manager Personal Commissions Invoice</field>
+            <field name="model_id" ref="ng_sales_commission.model_sales_commission_invoice"/>
+            <field name="domain_force">[(1,'=', 1)]</field>
+            <field name="groups" eval="[(4, ref('account.group_account_invoice')), (4, ref('base.group_sale_salesman'))]"/>
+        </record>
+    </data>
+</openerp>

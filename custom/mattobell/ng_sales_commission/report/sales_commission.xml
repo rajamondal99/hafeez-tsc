@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+         <!-- QWeb Reports -->
+        <report
+            id="sales_commission_report"
+            model="sales.commission"
+            menu="True"
+            report_type="qweb-pdf"
+            string="Sales Commission Report"
+            name="ng_sales_commission.sales_commission_report_id"
+            file="ng_sales_commission.sales_commission_report_id"
+           />
+        
+        <template id="sales_commission_report_id"> 
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-5 col-xs-offset-7"></div>
+                        </div>
+                        <h2>
+                            <span t-field="doc.number"/>
+                        </h2>
+                        <table class="table table-condensed">
+                            <tr>
+                                <td>
+                                    <strong>Date</strong>
+                                </td>
+                                <td>
+                                    <span t-field="doc.date"/>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Sales Agent</strong>
+                                </td>
+                                <td>
+                                    <span t-field="doc.sales_agent_id.name"/>
+                                </td>
+                                <td>
+                                    <strong>Sales Person</strong>
+                                </td>
+                                <td>
+                                    <span t-field="doc.sales_person_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Invoice</strong>
+                                </td>
+                                <td>
+                                    <span t-field="doc.invoice_id.number"/>
+                                </td>
+                                <td>
+                                    <strong>Amount</strong>
+                                </td>
+                                <td>
+                                    <span t-field="doc.invoice_amount"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Customer Paid Amount</strong>
+                                </td>
+                                <td>
+                                    <span t-field="doc.customer_paid_amount"/>
+                                </td>
+                                <td>
+                                    <strong>Agent Received Amount</strong>
+                                </td>
+                                <td>
+                                    <span t-field="doc.agent_received_amount"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

@@ -1,0 +1,91 @@
+<openerp>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="fastra_reports.list">
+      <field name="name">fastra_reports list</field>
+      <field name="model">fastra_reports.fastra_reports</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="fastra_reports.action_window">
+      <field name="name">fastra_reports window</field>
+      <field name="res_model">fastra_reports.fastra_reports</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="fastra_reports.action_server">
+      <field name="name">fastra_reports server</field>
+      <field name="model_id" ref="model_fastra_reports_fastra_reports"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="fastra_reports" id="fastra_reports.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="fastra_reports.menu_1" parent="fastra_reports.menu_root"/>
+    <menuitem name="Menu 2" id="fastra_reports.menu_2" parent="fastra_reports.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="fastra_reports.menu_1_list" parent="fastra_reports.menu_1"
+              action="fastra_reports.action_window"/>
+    <menuitem name="Server to list" id="fastra_reports" parent="fastra_reports.menu_2"
+              action="fastra_reports.action_server"/>
+
+
+    -->
+
+
+<!-- parent="stock.menu_stock_root"  -->
+    <!-- <menuitem name="Reportss" id="fastra_reports.menu_root" web_icon="fastra_reports,static/description/icon.png" groups="base.group_user"/> -->
+    <menuitem name="Reports" id="reports_root_menu" web_icon="fastra_reports,static/description/icon.png" action="sale.action_orders" groups="group_ceo"/>
+  	<menuitem id="reports_sub_menu_sales" parent="reports_root_menu" name="Sales Report" action="sale.action_orders"/>
+    <menuitem id="reports_sub_menu_purchase" parent="reports_root_menu" name="Purchase Report" action="purchase.purchase_form_action"/>
+    <menuitem id="reports_sub_menu_stock" parent="reports_root_menu" name="Inventory Report" action="stock.quantsact"/>
+    <menuitem name="Account Report" id="reports_sub_menu_account" parent="reports_root_menu" /> 
+    <menuitem id="reports_nested_menu_invoice" parent="reports_sub_menu_account" name="Customer Invoices" action="account.action_invoice_tree1"/>
+    <menuitem id="reports_nested_menu_bill" parent="reports_sub_menu_account" name="Vendor Bills" action="account.action_invoice_tree2"/>
+
+
+
+
+    
+
+    <!-- <menuitem name="Products Only" id="inventory_request" parent="reports_root_menu"  action="inventory_request_form"/>
+
+
+    <menuitem id="library_root_menu" name="Library" />
+		<menuitem id="library_sub_menu" parent="library_root_menu" name="Library Book" />
+		<menuitem id="library_book_menu" action="action_library_book" parent="library_sub_menu" /> -->
+
+
+
+    <!-- <menuitem sequence="30" name="Inventory Mananagement" id="inventory_management" parent="stock.menu_stock_root" />
+
+    <menuitem sequence="30" name="Inventory Request" id="inventory_request" parent="inventory_management" action="inventory_request_form"/> -->
+
+  </data>
+</openerp>

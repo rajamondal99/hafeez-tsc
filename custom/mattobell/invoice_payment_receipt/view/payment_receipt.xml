@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+        <record model="ir.ui.view" id="invoice_form_send_receipt_inherit_id">
+            <field name="name">account.invoice</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/header/button[@name='action_invoice_sent']" position="after">
+                     <button name="action_invoice_payment_sent" type="object" groups="base.group_user" string="Send Receipt by Email" attrs="{'invisible':[('state', 'in', ('draft','cancel','proforma','proforma2'))]}" />
+                 </xpath>
+            </field>
+         </record>
+         
+         <record model="ir.ui.view" id="view_partner_form_send_invoice_payment_inherit_id">
+            <field name="name">res.partner</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='debit']" position='after'>
+                     <field name="send_invoice_payment_receipt"/>
+                 </xpath>
+            </field>
+         </record>
+         
+      </data>
+</openerp>

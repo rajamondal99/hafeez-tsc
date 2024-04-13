@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_frontend_sale_agent" inherit_id="website.assets_frontend" name="Shop">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/ng_property_management_web/static/src/js/agent.js"></script> 
+                <script type="text/javascript" src="/ng_property_management_web/static/src/js/website_sale.js"></script>
+            </xpath>
+        </template>
+        
+        
+        <template id="payment_sale_agent" inherit_id="website_sale.payment">
+            <xpath expr="//div[@id='payment_method']" position="before">
+                <div class=" mb64 row">
+                    <div class="col-lg-3 col-sm-6">
+                        <h4>Branch</h4>
+                        <select class="form-control" name="branches" id="branch">
+                            <t t-foreach="branches" t-as="branche">
+                                <option t-att-value="branche.id" t-esc="branche.name"/>
+                            </t>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <h4>Sales Agent</h4>
+                        <select class="form-control" name="sale_agents" id="sale_agent">
+                            <t t-foreach="sale_agents" t-as="agent">
+                                <option t-att-value="agent.id" t-esc="agent.agent_name"/>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+        
+        <!--template id="variants_installment" inherit_id="website_sale.variants">
+            <xpath expr="//ul" position="after">
+                <div id="installment_div" class="hidden">
+                     <strong >Installments</strong>
+                    <select name="installment_id" id="installments" class="form-control"></select>
+                </div>
+            </xpath>
+        </template-->
+        
+        <template id="product_installment" name="Product" inherit_id="website_sale.product">
+            <xpath expr="//div[@class='js_product']/t" position="after">
+                <div id="installment_div" class="hidden">
+                     <strong >Installments</strong>
+                    <select name="installment_id" id="installments" class="form-control"></select>
+                </div>
+            </xpath>
+        </template>
+        
+        <template id="cart_lines_installment" name="Shopping Cart" inherit_id="website_sale.cart_lines">
+<!--            <xpath expr="//table[@id='cart_products']/thead/tr/th[2]" position="after">-->
+<!--                <th>Installment</th>-->
+<!--            </xpath>-->
+            <!--xpath expr="//table[@id='cart_products']/tbody/t/tr/td[3]" position="after">
+                <td t-if="line.property_installment_id">
+                    <span t-field="line.property_installment_id"/>
+                </td>
+            </xpath-->
+             <xpath expr="//table[@id='cart_products']/tbody/t/tr/td[@id='td-price']" position="replace">
+                 <td class="text-center" id="td-price" name="price">
+                 <t t-if="line.property_installment_id">
+                     <span t-field="line.property_installment_id.monthly_installment" style="white-space: nowrap;" t-field-options='{
+                         "widget": "monetary",
+                         "display_currency": "website.currency_id"
+                     }'/>
+                 </t>
+                <t t-if="not line.property_installment_id">
+                       <del t-attf-class="text-danger #{'' if line.product_id.lst_price &gt; line.discounted_price else 'hidden'}" style="text-decoration: line-through; white-space: nowrap;"
+                        t-field="line.product_id.lst_price" t-field-options='{
+                            "widget": "monetary",
+                            "from_currency": "line.company_id.currency_id",
+                            "display_currency": "website.currency_id"
+                        }'/>
+                    <span t-field="line.discounted_price" style="white-space: nowrap;" t-field-options='{
+                         "widget": "monetary",
+                         "display_currency": "website.currency_id"
+                     }'/>
+                 </t>
+                 </td>
+            </xpath>
+            
+        </template>
+        <!--template id="payment_installment" inherit_id="website_sale.payment">
+                <xpath expr="//td[5]" position="replace">
+                    <td class="text-center">
+                        <t t-if="line.property_installment_id">
+                             <span t-field="line.property_installment_id.monthly_installment" style="white-space: nowrap;" t-field-options='{
+                                 "widget": "monetary",
+                                 "from_currency": "website_sale_order.pricelist_id.currency_id",
+                                 "display_currency": "website.currency_id"
+                             }'/>
+                         </t>
+                         <t t-if="not line.property_installment_id">
+                             <span t-field="line.price_unit" style="white-space: nowrap;" t-field-options='{
+                                 "widget": "monetary",
+                                 "from_currency": "website_sale_order.pricelist_id.currency_id",
+                                 "display_currency": "website.currency_id"
+                             }'/>
+                         </t>
+                      </td>
+                </xpath>
+            </template-->
+            
+        <template id="product_price" inherit_id="website_sale.product_price">
+            <xpath expr="//b[@class='oe_price']" position="before"> 
+                    <b>Full Price: </b>
+            </xpath>
+            <xpath expr="//h4[@class='oe_price_h4 css_editable_mode_hidden']" position="after">
+                <h4 class="oe_price_h4 oe_installment_price_h4 css_editable_mode_hidden hidden">
+                    <b>Installment Price: </b>
+                    <b class="oe_installment_price" style="white-space: nowrap;"
+                        t-field="product.price"
+                        t-field-options='{
+                           "widget": "monetary",
+                           "display_currency": "website.currency_id"
+                       }'/>
+                </h4>
+            </xpath>
+        </template>
+            
+    </data>
+</openerp>

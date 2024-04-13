@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="kin_stock_assets_backend" name="kin_stock_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/kin_stock/static/src/css/kin_stock.css"/>
+                <script type="text/javascript" src="/kin_stock/static/src/js/kin_stock.js"/>
+            </xpath>
+        </template>
+
+        <record id="action_client_kin_stock" model="ir.actions.client">
+            <field name="name">Kin Stock Widget</field>
+            <field name="tag">action_cliedddnt_kin_stock_tag</field>
+        </record>
+        <record id="action_client_kin_stock1" model="ir.actions.client">
+            <field name="name">Kin Stock Widgetss</field>
+            <field name="tag">ir_actions_actdsfsdfssj_close_wizard_and_reload_view</field>
+        </record>
+
+        <record id="view_picking_form_extend" model="ir.ui.view">
+            <field name="name">stock.picking.form.extend</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+
+                <xpath expr="//sheet/div[@name='button_box']" position="before">
+                    <div class="alert alert-success text-center o_form_header" attrs="{'invisible': [('show_alert_box', '!=', True)]}">
+                       <button name="close_alert_box" type="object" class="close" data-dismiss="modal"><span aria-hidden="true" class="fa fa-times"></span></button>
+                        <div>
+                            <strong>The accountant will receive a vendor bill email notification for the received items</strong>
+                        </div>
+                         <field name="show_alert_box" invisible="1"/>
+                     </div>
+                 </xpath>
+
+                <field name="origin" position="after" >
+                    <field name="shipment_ref"  />
+                </field>
+
+                <field name="location_id" position="before" >
+                     <field name="operation_type" invisible="1" />
+                </field>
+                <field name="picking_type_id" position="attributes" >
+                    <attribute name="invisible" >1</attribute>
+                </field>
+
+                <field name="location_id" position="attributes"  >
+            		<attribute name="attrs"   >{'readonly': [('state', 'not in', ['draft','assigned','confirmed'])],'readonly': [('operation_type', 'not in', ['outgoing','internal'])]}</attribute>
+            	    <attribute name="options" >{'no_open': True, 'no_create': True}</attribute>
+                    <attribute name="domain" >[('is_dont_show_location','=',False)]</attribute>
+                </field>
+                <field name="location_dest_id" position="attributes"  >
+            		<attribute name="attrs"   >{'readonly': [('state', 'not in', ['draft','assigned','confirmed'])],'readonly': [('operation_type', 'not in', ['incoming','internal'])]}</attribute>
+            	    <attribute name="options" >{'no_open': True, 'no_create': True}</attribute>
+                    <attribute name="domain" >[('is_dont_show_location','=',False)]</attribute>
+                </field>
+
+                 <button name="force_assign" position="attributes"  >
+                    <attribute name="invisible">1</attribute>
+                 </button>
+
+                <button name="action_assign" position="attributes"  >
+                    <attribute name="string">Check Availability and Reserve</attribute>
+                 </button>
+
+                 <!--<field name="move_lines_related" position="attributes"  >-->
+                      <!--<attribute name="attrs">{'invisible': False}</attribute>-->
+                 <!--</field>-->
+                 <div  name="button_box" position="inside">
+                     <button type="object"  name="btn_view_invoices" class="oe_stat_button" icon="fa-bars" attrs="{'invisible': [('invoice_count', '=', 0)]}" >
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                    </button>
+                     <button type="object"  name="btn_view_po" class="oe_stat_button" icon="fa-bars" attrs="{'invisible': [('po_count', '=', 0)]}" >
+                            <field name="po_count" widget="statinfo" string="Purchase Order"/>
+                    </button>
+                     <button type="object"  name="btn_view_so" class="oe_stat_button" icon="fa-bars" attrs="{'invisible': [('so_count', '=', 0)]}" >
+                            <field name="so_count" widget="statinfo" string="Sales Order"/>
+                    </button>
+
+                 </div>
+
+                <button name="show_details" position="attributes">
+                    <attribute name="invisible" >1</attribute>
+                </button>
+
+
+            </field>
+        </record>
+
+    <record id="view_location_form_extend" model="ir.ui.view">
+            <field name="name">stock.location.form.extend</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form"  />
+            <field name="arch" type="xml">
+                <field name="return_location" position="after" >
+                    <field name="is_default_option" />
+                    <field name="is_dont_show_location" />
+                </field>
+            </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_picking_type_form_extend">
+            <field name="name">Picking Types</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.view_picking_type_form"  />
+            <field name="arch" type="xml">
+                <field name="barcode_nomenclature_id" position="after" >
+                    <field name="is_create_invoice" />
+                    <field name="is_send_invoice_notification" />
+                </field>
+            </field>
+    </record>
+
+
+        <record model="ir.ui.view" id="view_stock_quant_tree_extend">
+            <field name="name">stock.quant.tree.extend</field>
+            <field name="model">stock.quant</field>
+            <field name="inherit_id" ref="stock.view_stock_quant_tree"  />
+            <field name="arch" type="xml">
+                <field name="in_date" position="after" >
+                    <field name="cost_price" />
+                    <field name="cost" />
+                </field>
+            </field>
+        </record>
+
+
+
+        <record id="view_pack_operation_details_form_extend" model="ir.ui.view">
+            <field name="name">stock.pack.operation.details.form.extend</field>
+            <field name="model">stock.pack.operation</field>
+            <field name="inherit_id" ref="stock.view_pack_operation_details_form"  />
+            <field name="arch" type="xml">
+
+                  <field name="location_id" position="attributes"  >
+                    <attribute name="domain">[]</attribute>
+                    <attribute name="domain" >[('is_dont_show_location','=',False)]</attribute>
+                     <attribute name="options" >{'no_open': True, 'no_create': True}</attribute>
+                  </field>
+
+                <field name="location_dest_id" position="attributes"  >
+                    <attribute name="domain">[]</attribute>
+                    <attribute name="domain" >[('is_dont_show_location','=',False)]</attribute>
+                     <attribute name="options" >{'no_open': True, 'no_create': True}</attribute>
+                </field>
+
+
+            </field>
+        </record>
+
+
+
+        <record id="vpicktree_extend" model="ir.ui.view">
+            <field name="name">stock.picking.tree</field>
+            <field name="model">stock.picking</field>
+             <field name="inherit_id" ref="stock.vpicktree"  />
+            <field name="arch" type="xml">
+                <field name="name" position="after" >
+                    <field name="location_id"  />
+                </field>
+                <field name="name" position="after" >
+                    <field name="shipment_ref" />
+                </field>
+            </field>
+        </record>
+
+
+        <record id="view_picking_internal_search_extend" model="ir.ui.view">
+            <field name="name">stock.picking.internal.search.extend</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search" />
+            <field name="arch" type="xml">
+                    <field name="partner_id" position="before" >
+                        <field name="shipment_ref"/>
+                    </field>
+            </field>
+        </record>
+
+
+
+
+        <record id="view_immediate_transfer_extend" model="ir.ui.view">
+        <field name="name">view_immediate_transfer_extend</field>
+        <field name="model">stock.immediate.transfer</field>
+         <field name="inherit_id" ref="stock.view_immediate_transfer"  />
+        <field name="arch" type="xml">
+
+            <xpath expr="//form" position="replace">
+                <form string="Done Quantity is Required">
+                <group>
+                    <p>
+                        Please Set the "Done" Qty of the Products Below.
+                    </p>
+                </group>
+                <footer>
+                    <button string="Close" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+          </xpath>
+
+        </field>
+    </record>
+
+
+
+
+
+
+         <menuitem id="stock.menu_stock_warehouse_mgmt" name="Operations" parent="stock.menu_stock_root" sequence="2" groups="stock.group_stock_manager,stock.group_stock_user" />
+         <menuitem id="menu_stock_level" name="Stock Level" parent="stock.menu_stock_warehouse_mgmt" sequence="3" action="stock.quantsact"/>
+        <menuitem  action="stock.stock_picking_type_action" id="stock_picking_type_menu_extend"   parent="stock.stock_picking_type_menu" sequence="0" name="Dashboard"/>
+    </data>
+</openerp>

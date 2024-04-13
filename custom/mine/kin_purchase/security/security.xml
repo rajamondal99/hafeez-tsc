@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+		<record id="group_receive_stock_transfer_email" model="res.groups">
+			<field name="name">Receive Stock Transfer Notification</field>
+		</record>
+
+
+</data>
+</openerp>

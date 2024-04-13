@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    
+    <menuitem name="Time Table" id="calendar.mail_menu_calendar" sequence="2" action="calendar.action_calendar_event" web_icon="calendar,static/description/icon.png" groups="base.group_user"/>
+   <delete model="ir.ui.menu" id="calendar.mail_menu_calendar" />
+        <delete model="ir.ui.menu" id="mail.mail_channel_menu_root_chat" />
+        <delete model="ir.ui.menu" id="mail.menu_contacts" />
+
+
+
+    </data>
+</openerp>

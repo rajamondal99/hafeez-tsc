@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<record id="crm_team_view_form_extend" model="ir.ui.view">
+            <field name="name">crm.team.form.extend</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form" />
+            <field name="arch" type="xml">
+                <field name="active" position="after">
+                    <field name="warehouse_id" colspan="2" col="2" />
+                </field>
+
+            </field>
+        </record>
+
+        <record id="view_order_form_extend" model="ir.ui.view">
+            <field name="name">sale.order.form.extend</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+
+                <xpath expr="//sheet/div[@name='button_box']" position="before">
+                    <div class="alert alert-success text-center o_form_header" attrs="{'invisible': [('show_alert_box', '!=', True)]}">
+                       <button name="close_alert_box" type="object" class="close" data-dismiss="modal"><span aria-hidden="true" class="fa fa-times"></span></button>
+                        <div>
+                            <strong>The inventory personnel will receive an email to check availability and removal of the items from the stock to the customer. An invoice will be generated and sent to the accountant, upon validation and removal of stock from the stock location</strong>
+                        </div>
+                         <field name="show_alert_box" invisible="1"/>
+                     </div>
+                 </xpath>
+
+                <field name="client_order_ref" position="replace"/>
+                <field name="team_id" position="replace"/>
+                 <field name="project_id" position="after" >
+                    <field name="client_order_ref" string="Order Reference"/>
+                     <field name="team_id" string="Sales Channel" required="1" />
+                </field>
+<!-- is is better to copy the whole field from the source file and then add the position attributes to it. so that the system can locate the file in the parent view -->
+                 <button name="%(sale.action_view_sale_advance_payment_inv)d"  position="attributes"
+                        type="action" class="btn-primary"
+                        attrs="{'invisible': [('invoice_status', '!=', 'to invoice')]}" >
+                         <attribute name="groups">kin_sales.group_see_create_invoice_button</attribute>
+                 </button>
+
+                 <button name="%(sale.action_view_sale_advance_payment_inv)d" position="attributes"
+                        type="action" context="{'default_advance_payment_method': 'percentage'}"
+                        attrs="{'invisible': ['|',('invoice_status', '!=', 'no'), ('state', '!=', 'sale')]}" >
+                        <attribute name="groups">kin_sales.group_see_create_invoice_button</attribute>
+                </button>
+
+            </field>
+        </record>
+
+        <record id="view_order_form_inherit_sale_stock_extend" model="ir.ui.view">
+            <field name="name">sale.order.form.sale.stock.extend</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+            <field name="arch" type="xml">
+                 <field name="warehouse_id" position="attributes" >
+                        <attribute name="invisible" >1</attribute>
+                 </field>
+            </field>
+        </record>
+
+
+        <record id="view_order_tree_extend" model="ir.ui.view">
+            <field name="name">sale.order.tree.extend</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree" />
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="client_order_ref" string="Order Reference"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="view_sale_config_settings_extend" model="ir.ui.view">
+            <field name="name">sale settings</field>
+            <field name="model">sale.config.settings</field>
+            <field name="inherit_id" ref="base_setup.view_sale_config_settings"/>
+            <field name="arch" type="xml">
+                <div id="main" position="inside">
+                    <group string="Other Config">
+                        <field name="is_select_sales_team"  />
+                    </group>
+                </div>
+            </field>
+        </record>
+
+        <menuitem id="sale.menu_sale_quotations" name="Draft SO's / Quotations"
+                action="sale.action_quotations" parent="base.menu_sales"
+                sequence="11"/>
+
+
+
+
+<delete model="ir.values" id="sale.sale_order_line_make_invoice" />
+
+    </data>
+</openerp>
