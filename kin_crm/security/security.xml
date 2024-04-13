@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+		<record id="group_show_crm_menu" model="res.groups">
+			<field name="name">Show "Sales and CRM" Menu</field>
+		</record>
+
+
+</data>
+</openerp>

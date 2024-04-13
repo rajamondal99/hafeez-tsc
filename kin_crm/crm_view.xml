@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+    <menuitem name="Sales &amp; CRM" id="base.menu_base_partner" web_icon="sale,static/description/icon.png"
+            groups="kin_crm.group_show_crm_menu" sequence="6"/>
+    <menuitem id="base.menu_sales" name="Sales" parent="base.menu_base_partner" sequence="3"/>
+    <menuitem id="crm_menu" name="CRM" parent="base.menu_base_partner" sequence="4" />
+    <menuitem name="Leads" id="crm.menu_crm_leads" parent="crm_menu" sequence="1" action="crm.crm_lead_all_leads" />
+    <menuitem id="crm.menu_crm_opportunities" action="crm.action_your_pipeline" parent="crm_menu" sequence="4"/>
+    <menuitem id="crm.crm_lead_menu_activities" name="Next Activities" sequence="5"     parent="crm_menu" action="crm.crm_lead_action_activities" />
+
+
+
+    </data>
+</openerp>

@@ -1,0 +1,48 @@
+<openerp>
+<data>
+	
+  <record id="view_purchasr_order_form_extend" model="ir.ui.view">
+            <field name="name">purchase order extend</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="arch" type="xml">
+
+                         <xpath expr="//field[@name='currency_id']" position="after">
+					<field name="delivery_order" attrs="{'readonly':[('state','not in','draft')]}" />
+					<field name="finance_vendor_bill_creation_start_time" attrs="{'invisible':[('state','not in','purchase')]}" style="background-color:red;color:white;"/>
+                                       <field name="purchase_order_approve_time_start" attrs="{'invisible':[('state','not in','draft')]}" style="background-color:red;color:white;"/>
+<!--				<field name="finance_vendor_bill_creation_end_time"/>-->
+
+      				</xpath>
+            </field>
+        </record>
+
+  <record id="view_delivery_order_form_extend" model="ir.ui.view">
+            <field name="name">delivery order extend</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+
+                         <xpath expr="//field[@name='location_dest_id']" position="after">
+					<field name="store_approval_done" invisible="1"/>
+                                        <field name="store_approval_time_start" attrs="{'invisible':[('store_approval_done','=','true')]}" style="background-color:red;color:white;" readonly="1"/>
+					<field name="store_approval_time_end" attrs="{'invisible':[('store_approval_done','=',False)]}" style="background-color:green;color:white;" readonly="1"/>
+                                 
+                                </xpath>
+		   	 <xpath expr="//button[@name='action_assign']" position="after">
+				<button name="store_approval_done_action" string="Not Avaliable" type="object" attrs="{'invisible':['|',('state','not in','confirmed'),('store_approval_done','=','True')]}" class="oe_highlight"/>			</xpath>
+
+
+			<xpath expr="//field[@name='move_type']" position="after">
+
+				<field name="reciever_signature" widget="signature"/>		
+				</xpath>
+            </field>
+        </record>
+
+
+</data>
+
+
+
+</openerp>

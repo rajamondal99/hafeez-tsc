@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_kin_ticket_user,kin.ticket ticket user,model_kin_ticket,group_helpdesk_user,1,1,1,1
+access_kin_ticket_manager,kin.ticket ticket manager,model_kin_ticket,group_helpdesk_manager,1,1,1,1
+access_kin_ticket_category_user,kin.ticket.category ticket user,model_kin_ticket_category,group_helpdesk_user,1,1,1,1
+access_kin_ticket_category_manager,kin.ticket.category ticket manager,model_kin_ticket_category,group_helpdesk_manager,1,1,1,1
+access_stock_production_ticket_user,stock.production.lot ticket user,stock.model_stock_production_lot,group_helpdesk_user,1,1,1,1
+access_stock_production_ticket_manager,stock.production.lot ticket manager,stock.model_stock_production_lot,group_helpdesk_manager,1,1,1,1
+access_stock_picking_ticket_user,stock.picking ticket user,stock.model_stock_picking,group_helpdesk_user,1,1,1,1
+access_stock_picking_ticket_manager,stock.picking ticket manager,stock.model_stock_picking,group_helpdesk_manager,1,1,1,1
+access_kin_sla_user,kin.sla ticket user,model_kin_sla,group_helpdesk_user,1,1,1,1
+access_kin_sla_manager,kin.sla ticket manager,model_kin_sla,group_helpdesk_manager,1,1,1,1
+access_kin_helpdesk_team_user,kin.helpdesk.team ticket user,model_kin_helpdesk_team,group_helpdesk_user,1,1,1,1
+access_kin_helpdesk_team_manager,kin.helpdesk.team ticket manager,model_kin_helpdesk_team,group_helpdesk_manager,1,1,1,1
+access_kin_ticket_cost_user,kin.ticket.cost ticket user,model_kin_ticket_cost,group_helpdesk_user,1,1,1,1
+access_kin_ticket_cost_manager,kin.ticket.cost ticket manager,model_kin_ticket_cost,group_helpdesk_manager,1,1,1,1

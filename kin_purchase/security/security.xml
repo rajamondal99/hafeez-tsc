@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+		<record model="ir.module.category" id="module_category_purchase_request_approver">
+            <field name="name">Purchase Request Approver</field>
+            <field name="description">Purchase Request Approver</field>
+        </record>
+
+		<record id="group_receive_stock_transfer_email" model="res.groups">
+			<field name="name">Receive Receipt Stock Transfer Notification</field>
+		</record>
+
+		<record id="group_receive_rfq_confirmed_email" model="res.groups">
+			<field name="name">Receive "RFQ Confirmed" Notification</field>
+		</record>
+
+		<record id="group_purchase_request_approver" model="res.groups">
+			<field name="name">Purchase Request Approver</field>
+			<field name="category_id" ref="module_category_purchase_request_approver"/>
+		</record>
+
+		<!--<record id="group_show_purchase_menu" model="res.groups">-->
+			<!--<field name="name">Show "Purchase" Menu</field>-->
+		<!--</record>-->
+
+
+
+
+
+</data>
+</openerp>

@@ -1,0 +1,41 @@
+<openerp>
+<data>
+
+<record model="ir.ui.view" id="history_view_id">
+    <field name="name">Timeout History</field>
+    <field name="model">timeout.history</field>
+    <field name="priority" eval="16"/>
+    <field name="arch" type="xml">
+        <tree string="All Timeouts" create="0">
+    <field name="name"/>
+    <field name="user_id"/>
+   <field name="time_start"/>
+<field name="time_end" />
+<field name="document_id" />
+</tree>
+    </field>
+</record>
+
+
+
+
+        <record model="ir.actions.act_window" id="history_action">
+            <field name="name">Timeout History</field>
+            <field name="res_model">timeout.history</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="history_menu" name="Timeout History"
+                  parent="kin_hr.hr_menus"
+                  action="history_action" groups="base.group_hr_manager"/>
+
+
+
+
+</data>
+
+
+
+
+</openerp>
