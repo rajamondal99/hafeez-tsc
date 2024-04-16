@@ -73,8 +73,8 @@
     -->
     <!-- actions -->
   
-    <menuitem name="List" id="purchase_order_tsc_tsc3" parent="account.menu_finance_payables"
-              action="purchase_order_tree_33"/>
+<!--    <menuitem name="List" id="purchase_order_tsc_tsc3" parent="account.menu_finance_payables"-->
+<!--              action="purchase_order_tree_33"/>-->
    <!--
     <menuitem name="Server to list" id="tsc_tsc" parent="tsc_tsc.menu_2"
               action="tsc_tsc.action_server"/>

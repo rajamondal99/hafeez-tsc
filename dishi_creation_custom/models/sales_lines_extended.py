@@ -29,3 +29,4 @@ class SalesLinesExtend(models.Model):
             mr = (rec.price_unit - rec.purchase_price) * rec.product_uom_qty
             comm_amt = (mr * rec.commission_value) / 100
             rec.commission_amount = comm_amt
+            rec.margin = mr

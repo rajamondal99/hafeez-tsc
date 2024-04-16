@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+         <report
+		    id="sales_report"
+            model="sale.order"
+		    string="Sales Excel Report"
+		    report_type="xlsx"
+		    name="insabhi_sales.report_sales_report"
+		    file="insabhi_sales.report_sales_report"
+		    attachment_use="False"
+        />
+
+    </data>
+</odoo>
