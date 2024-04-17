@@ -5,6 +5,15 @@ from openerp.exceptions import UserError, ValidationError
 class Holidays(models.Model):
     _inherit = "hr.holidays"
 
+    @api.one
+    def _compute_current_user_is_approver(self):
+        if self.pending_approver.user_id.id == self.env.user.id or self.pending_approver.transfer_holidays_approvals_to_user.id == self.env.user.id:
+            self.current_user_is_approver = True
+        elif self.department_id.manager_id.user_id.id == self.env.user.id:
+            self.current_user_is_approver = True
+        else:
+            self.current_user_is_approver = False
+
     @api.multi
     def action_approve(self):
         for holiday in self:

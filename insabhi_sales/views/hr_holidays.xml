@@ -9,6 +9,8 @@
 			<field name="arch" type="xml">
                 <button name="action_approve" position="replace">
                     <button string="Approve" name="action_approve" type="object"
+						attrs="{'invisible': [('current_user_is_approver', '!=', True)]}"
+							groups="hr_holidays_multi_levels_approval.group_leave_request_button_access"
 							class="oe_highlight" />
                 </button>
             </field>
