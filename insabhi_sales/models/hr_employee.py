@@ -32,7 +32,7 @@ class HrExtend(models.Model):
             'holiday_status_id': self.env.ref('hr_holidays.holiday_status_cl').id,
             'department_id': employee.department_id.id,
         })
-        leave_id.holidays_confirm()
+        leave_id.action_validate()
 
     @api.model
     def carry_forward_leaves(self):

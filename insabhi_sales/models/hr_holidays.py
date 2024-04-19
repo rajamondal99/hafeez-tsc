@@ -14,6 +14,13 @@ class Holidays(models.Model):
         else:
             self.current_user_is_approver = False
 
+    @api.onchange('employee_id')
+    def sltech_onchange_employee(self):
+        if self.employee_id:
+            self.department_id = self.employee_id.department_id.id
+        else:
+            self.pending_approver = False
+
     @api.multi
     def action_approve(self):
         for holiday in self:
@@ -47,6 +54,7 @@ class Holidays(models.Model):
                 # In this state only HR manager can approve the leave
                 hr_manager = department.hr_manager_id
                 if hr_manager and hr_manager.user_id.id == user_id:
+                    holiday.type = 'add'
                     super(Holidays, self).action_approve()
                 else:
                     raise ValidationError("You can not approve the leave. Because you are not hr manager")
