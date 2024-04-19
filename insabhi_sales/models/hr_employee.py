@@ -18,8 +18,9 @@ class HrExtend(models.Model):
     def create_leave_allocation_for_old_employee(self):
         employees = self.search([])
         for emp in employees:
-            leave_id = self.env['hr.holidays'].search([('employee_id', '=', emp.id), ('holiday_status_id', '=', self.env.ref('hr_holidays.holiday_status_cl').id),('number_of_days_temp', '=', 18.0)])
-            if not leave_id:
+            leave_id = self.env['hr.holidays']
+            eighteen_day_leave = leave_id.search([('employee_id', '=', emp.id), ('holiday_status_id', '=', self.env.ref('hr_holidays.holiday_status_cl').id),('number_of_days_temp', '=', 18.0), ('state', '=', 'validate')])
+            if not eighteen_day_leave:
                 self.create_leave_allocation(emp)
 
     def create_leave_allocation(self, employee, number_of_leaves=18.0):
@@ -33,6 +34,17 @@ class HrExtend(models.Model):
             'department_id': employee.department_id.id,
         })
         leave_id.action_validate()
+
+    @api.model
+    def cancel_employee_allocation_request(self):
+        employees = self.search([])
+        for emp in employees:
+            holiday_ids = self.env['hr.holidays'].sudo().search([('employee_id', '=', emp.id),('state', '=', 'validate')])
+            for holiday in holiday_ids:
+                self.env.cr.execute(
+                    "update hr_holidays set state='cancel', notes='Cancel By Script' where id =%s",
+                    (holiday.id,))
+
 
     @api.model
     def carry_forward_leaves(self):
