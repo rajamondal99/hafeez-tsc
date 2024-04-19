@@ -23,7 +23,7 @@ class SalesLinesExtend(models.Model):
             commission_type = self.product_id.product_commission
             self.commission_value = commission_type.value_percentage
 
-    @api.onchange('price_subtotal')
+    @api.onchange('price_subtotal', 'purchase_price',)
     def change_margin1(self):
         for rec in self:
             mr = (rec.price_unit - rec.purchase_price) * rec.product_uom_qty
