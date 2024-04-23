@@ -31,8 +31,8 @@ class SalesReportWriter(ReportXlsx):
             sheet.write(j, k, obj.name)
             sheet.write(j, k + 1, obj.partner_id.name)
             sheet.write(j, k + 2, total_cost)
-            sheet.write(j, k + 4, total)
-            sheet.write(j, k + 3, total_margin)
+            sheet.write(j, k + 3, total)
+            sheet.write(j, k + 4, total_margin)
 
 
 SalesReportWriter('report.insabhi_sales.report_sales_report','sale.order')
