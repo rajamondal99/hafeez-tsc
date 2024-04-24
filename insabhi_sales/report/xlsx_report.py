@@ -23,7 +23,7 @@ class SalesReportWriter(ReportXlsx):
 
         for obj in objects:
             lines = obj.order_line
-            total_cost = sum(x.purchase_price for x in lines)
+            total_cost = sum(x.purchase_price * x.product_uom_qty for x in lines)
             total_margin = sum(x.margin for x in lines)
             total = sum((x.price_unit * x.product_uom_qty) for x in lines)
             k = 0
