@@ -5,6 +5,15 @@ from openerp.exceptions import UserError, ValidationError
 class Holidays(models.Model):
     _inherit = "hr.holidays"
 
+    def create(self, cr, uid, values, context=None):
+        # only hr manager can create leave allocation.
+        user = self.pool['res.users'].browse(cr, uid, uid, context=context)
+        group_hr_manager_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'base', 'group_hr_manager')[1]
+        group_ids = [g.id for g in user.groups_id]
+        if values.get('type') == 'add' and group_hr_manager_id not in group_ids:
+            raise ValidationError("You can not create leave allocation because you are not hr manager.")
+
+        return super(Holidays, self).create(cr, uid, values, context)
     @api.one
     def _compute_current_user_is_approver(self):
         if self.pending_approver.user_id.id == self.env.user.id or self.pending_approver.transfer_holidays_approvals_to_user.id == self.env.user.id:

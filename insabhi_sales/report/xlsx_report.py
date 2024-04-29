@@ -10,6 +10,7 @@ class SalesReportWriter(ReportXlsx):
         sheet.set_column(0, 5, 26)
 
         header = [
+            "Date",
             "SO Number",
             "Customer Name",
             "Total Cost",
@@ -28,11 +29,12 @@ class SalesReportWriter(ReportXlsx):
             total = sum((x.price_unit * x.product_uom_qty) for x in lines)
             k = 0
             j += 1
-            sheet.write(j, k, obj.name)
-            sheet.write(j, k + 1, obj.partner_id.name)
-            sheet.write(j, k + 2, total_cost)
-            sheet.write(j, k + 3, total)
-            sheet.write(j, k + 4, total_margin)
+            sheet.write(j, k, obj.date_order.split(' ')[0] if obj.date_order else "")
+            sheet.write(j, k + 1, obj.name)
+            sheet.write(j, k + 2, obj.partner_id.name)
+            sheet.write(j, k + 3, total_cost)
+            sheet.write(j, k + 4, total)
+            sheet.write(j, k + 5, total_margin)
 
 
 SalesReportWriter('report.insabhi_sales.report_sales_report','sale.order')

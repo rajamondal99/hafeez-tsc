@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_evaluation_competency,Employee Evaluation Competency,model_employee_evaluation_competency,base.group_user,1,1,1,1
+access_employee_evaluation_goal,Employee Evaluation Goal,model_employee_evaluation_goal,base.group_user,1,1,1,1
+access_employee_evaluation_training,Employee Evaluation Training,model_employee_evaluation_training,base.group_user,1,1,1,1
+access_employee_evaluation,Employee Evaluation,model_employee_evaluation,base.group_user,1,1,1,1
+access_employee_evaluation_future_goal,Employee Future Goal,model_employee_evaluation_future_goal,base.group_user,1,1,1,1
+
+
+
+
+
+
