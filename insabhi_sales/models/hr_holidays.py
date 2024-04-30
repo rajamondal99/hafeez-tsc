@@ -37,7 +37,7 @@ class Holidays(models.Model):
             employee = holiday.employee_id
             department = holiday.department_id or employee.department_id
 
-            group_hr_manager_id = self.env.ref('base.group_erp_manager')
+            group_hr_manager_id = self.env.ref('base.group_hr_manager')
 
             # Check holiday status
             if holiday.state not in ['confirm', 'validate1']:
