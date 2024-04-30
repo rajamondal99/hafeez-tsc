@@ -30,7 +30,8 @@
         "report_xlsx",
         "sale",
         "hr_holidays",
-        "hr_holidays_multi_levels_approval"
+        "hr_holidays_multi_levels_approval",
+        "hr_payroll"
     ],
     "data": [
         "report/view_recipt.xml",
